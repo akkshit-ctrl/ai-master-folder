@@ -47,9 +47,9 @@ The following rules have been dynamically injected based on the current deployme
 <!-- PROFILE_INSTRUCTIONS_INJECT -->
 
 ## 7. Discovery and Configuration
-This system is registered via `opencode.json` at the repository root, which exposes all agents, commands, and skills to OpenCode. Deploy a profile (lean or full) to apply select items to a specific workspace:
+This system is registered via `opencode.json` at the repository root, which exposes all agents, commands, and skills to OpenCode. Deploy a profile (full or lean) to apply select items to a specific workspace:
 ```powershell
-.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Global -Execute
+.\scripts\Deploy-OpenCode.ps1 -ProfileName full -Global -Execute
 ```
 
 ## 8. Final Verification

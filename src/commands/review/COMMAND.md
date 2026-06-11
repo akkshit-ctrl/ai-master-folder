@@ -2,7 +2,7 @@
 name: review
 description: "Trigger a code review on recent changes."
 agent: code-reviewer
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

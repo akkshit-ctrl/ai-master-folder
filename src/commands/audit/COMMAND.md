@@ -2,7 +2,7 @@
 name: audit
 description: "Run a security audit: dependency CVE scan, OWASP review, secret detection."
 agent: security-auditor
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

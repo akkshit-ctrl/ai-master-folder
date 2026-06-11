@@ -58,6 +58,12 @@ If you've done a read-edit-test cycle 5 times, the last 4 cycles' output is prob
 - User-provided context and preferences
 - Security-related findings
 
+## Common Pitfalls
+- Compacting too aggressively → losing active requirements and decisions
+- Not compacting at all → context fills up and model output degrades
+- Compacting only when blocked → reactive, not proactive
+- Assuming the model will compact for you → manual guidance is more precise
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

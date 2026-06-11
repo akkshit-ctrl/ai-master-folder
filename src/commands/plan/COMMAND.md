@@ -2,7 +2,7 @@
 name: plan
 description: "Create an implementation plan from requirements."
 agent: planner
-model: claude-opus-4-20250514
+model: ""
 subtask: true
 ---
 

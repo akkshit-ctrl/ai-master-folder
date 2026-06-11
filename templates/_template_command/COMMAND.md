@@ -2,7 +2,7 @@
 name: example-command
 description: "Triggers a specific workflow."
 agent: orchestrator
-model: claude-sonnet-4-20250514
+model: ""
 subtask: false
 ---
 

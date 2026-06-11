@@ -2,7 +2,7 @@
 name: test
 description: "Run tests with context-aware configuration."
 agent: tester
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

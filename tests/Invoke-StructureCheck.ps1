@@ -190,18 +190,7 @@ foreach ($hook in $expectedHooks) {
     Test-Check "hook: $hook.js" (Test-Path $path)
 }
 
-# 12. Plugins
-Write-Host "`n[Plugins]" -ForegroundColor Yellow
-$expectedPlugins = @("antigravity-auth", "gemini-auth", "kilo-gateway-auth", "omniroute-auth", "openai-codex-auth", "openhax-codex")
-foreach ($plugin in $expectedPlugins) {
-    $path = Join-Path (Join-Path $SrcDir "plugins") $plugin
-    $skillPath = Join-Path $path "SKILL.md"
-    Test-Check "plugin: $plugin/SKILL.md" (Test-Path $skillPath)
-    $pluginPath = Join-Path $path "plugin.ts"
-    Test-Check "plugin: $plugin/plugin.ts" (Test-Path $pluginPath)
-}
-
-# 13. Deploy script
+# 12. Deploy script
 Write-Host "`n[Scripts]" -ForegroundColor Yellow
 $deployPath = Join-Path (Join-Path $RepoRoot "scripts") "Deploy-OpenCode.ps1"
 Test-Check "scripts/Deploy-OpenCode.ps1" (Test-Path $deployPath)

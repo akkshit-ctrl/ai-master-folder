@@ -2,7 +2,6 @@
 name: explain
 description: "Explain a code section in detail."
 agent: ""
-model: claude-sonnet-4-20250514
 subtask: false
 ---
 

@@ -58,6 +58,12 @@ Follow imports and references to understand the full dependency chain.
 - Understanding a complex feature
 - Before making changes to unfamiliar code
 
+## Common Pitfalls
+- Skipping Levels 1-3 and jumping straight to deep-dive → wastes tokens on wrong files
+- Not searching before reading → reading files that grep would have excluded
+- Reading too wide → pulling in unrelated modules that share a name pattern
+- Stopping too early → missing critical dependencies that explain the behavior
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

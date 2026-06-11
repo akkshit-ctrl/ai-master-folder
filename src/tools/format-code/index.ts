@@ -20,7 +20,8 @@ export default tool("format-code", "Format code using project formatter", {
     const targets = files?.join(" ") ?? ".";
     const checkFlag = check ? "--check" : "";
 
-    if (existsSync(join(cwd, ".prettierrc"))) {
+    const prettierConfigs = [".prettierrc", ".prettierrc.json", ".prettierrc.yaml", ".prettierrc.yml", ".prettierrc.toml", "prettier.config.js", "prettier.config.mjs"];
+    if (prettierConfigs.some((cfg) => existsSync(join(cwd, cfg)))) {
       const cmd = `npx prettier ${checkFlag} --write ${targets}`;
       const output = execSync(cmd, { encoding: "utf-8" });
       return { formatter: "prettier", output: output.trim() };
@@ -32,5 +33,25 @@ export default tool("format-code", "Format code using project formatter", {
       return { formatter: "ruff", output: output.trim() };
     }
 
-    return { error: "No supported formatter detected (prettier, ruff)" };
+    if (existsSync(join(cwd, ".go.mod")) || existsSync(join(cwd, "go.mod"))) {
+      const cmd = `gofmt ${checkFlag === "--check" ? "-d" : "-w"} ${targets}`;
+      try {
+        const output = execSync(cmd, { encoding: "utf-8" });
+        return { formatter: "gofmt", output: output.trim() };
+      } catch (err: any) {
+        return { formatter: "gofmt", output: err.stdout?.trim() ?? err.message };
+      }
+    }
+
+    if (existsSync(join(cwd, "Cargo.toml"))) {
+      const cmd = `cargo fmt ${checkFlag} ${targets}`;
+      try {
+        const output = execSync(cmd, { encoding: "utf-8" });
+        return { formatter: "rustfmt", output: output.trim() };
+      } catch (err: any) {
+        return { formatter: "rustfmt", output: err.stdout?.trim() ?? err.message };
+      }
+    }
+
+    return { error: "No supported formatter detected (prettier, ruff, gofmt, rustfmt)" };
   });

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "$schema": "https://json.schemastore.org/json-schema.json",
   "description": "AI Master Folder hook definitions. Sparse defensive set — 5 hooks across 4 lifecycle events.",
   "hooks": {
     "SessionStart": [

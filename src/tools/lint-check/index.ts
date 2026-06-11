@@ -71,5 +71,25 @@ export default tool("lint-check", "Run linter on project files", {
       }
     }
 
-    return { error: "No supported linter detected (eslint, ruff)" };
+    if (existsSync(join(cwd, ".golangci.yml")) || existsSync(join(cwd, ".golangci.yaml"))) {
+      const cmd = `golangci-lint run ${targets}`;
+      try {
+        const output = execSync(cmd, { encoding: "utf-8" });
+        return { linter: "golangci-lint", output: output.trim() };
+      } catch (err: any) {
+        return { linter: "golangci-lint", output: err.stdout?.trim() ?? err.message };
+      }
+    }
+
+    if (existsSync(join(cwd, "Cargo.toml"))) {
+      const cmd = `cargo clippy ${targets} 2>&1`;
+      try {
+        const output = execSync(cmd, { encoding: "utf-8" });
+        return { linter: "clippy", output: output.trim() };
+      } catch (err: any) {
+        return { linter: "clippy", output: err.stdout?.trim() ?? err.message };
+      }
+    }
+
+    return { error: "No supported linter detected (eslint, ruff, golangci-lint, clippy)" };
   });

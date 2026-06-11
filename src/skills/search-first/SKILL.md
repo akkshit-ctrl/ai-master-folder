@@ -53,6 +53,12 @@ Before creating a new file or function, search for:
 - New file creation in well-understood domains
 - When explicitly told to "just implement" by the user
 
+## Common Pitfalls
+- Searching too narrowly → miss related patterns in different directories
+- Relying only on grep file → skipping docs, README, and ADRs
+- Finding a pattern but not understanding it → copying flawed designs
+- "I'll search later" mindset → implementing first creates tech debt
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

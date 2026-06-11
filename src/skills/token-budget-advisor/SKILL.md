@@ -25,9 +25,9 @@ Advises on token consumption and strategies for staying within model context lim
 
 | Model Class | Typical Limit | Strategy |
 |---|---|---|
-| DeepSeek V4 Flash | ~128K tokens | Keep active context under 80K for headroom |
-| Claude Sonnet 4 | ~200K tokens | Generous but still budget-conscious |
-| GPT-4o / Claude Opus | ~128K-200K | Use full context but prioritize relevance |
+| Flash-class models | ~128K tokens | Keep active context under 80K for headroom |
+| Sonnet-class models | ~200K tokens | Generous but still budget-conscious |
+| Opus-class models | ~128K-200K | Use full context but prioritize relevance |
 
 ## Token Budget Rules of Thumb
 

@@ -62,6 +62,12 @@ Write in the specified tone:
 [2] ...
 ```
 
+## Common Pitfalls
+- Writing without knowing the audience → wrong tone, missed context
+- Over-editing while drafting → writer's block. Draft first, edit later
+- Passive voice overuse → weak, indirect writing
+- Ignoring scannability → readers need headings, lists, and short paragraphs
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

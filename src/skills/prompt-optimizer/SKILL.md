@@ -55,6 +55,12 @@ Analyze and improve prompts for better AI responses.
 - [ ] Minimal verbosity for the complexity level
 - [ ] Edge cases or failure modes addressed
 
+## Common Pitfalls
+- Optimizing for token count at expense of clarity → ambiguous prompts waste more tokens
+- Removing all examples → the model lacks guidance on output format
+- Writing prompts from the model's perspective instead of your own → unnatural phrasing
+- Not testing optimized prompts → the shorter version may be less effective
+
 ## Related
 - See `strategic-compact` skill for context compression guidance
 - See `context-engineering` skill for broader context management

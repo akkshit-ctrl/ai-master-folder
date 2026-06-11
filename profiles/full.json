@@ -112,12 +112,5 @@
     "sequential-thinking",
     "supabase"
   ],
-  "plugins": [
-    "antigravity-auth",
-    "gemini-auth",
-    "kilo-gateway-auth",
-    "omniroute-auth",
-    "openai-codex-auth",
-    "openhax-codex"
-  ]
+  "plugins": []
 }

@@ -22,7 +22,7 @@ function runCommand(cmd, cwd) {
   try {
     const output = execSync(cmd, {
       cwd,
-      timeout: 30000,
+      timeout: 60000,
       stdio: "pipe",
       encoding: "utf-8",
     });
@@ -117,11 +117,13 @@ function main() {
 
   console.log("[hook:post-edit-validate]", JSON.stringify(results));
 
-  // Warn on validation failures but don't block by default
+  // Block on validation failures
   if (results.errors.length > 0) {
     console.warn(
-      "[hook:post-edit-validate] Validation warnings — review output above"
+      "[hook:post-edit-validate] Validation failed — blocking",
+      results.errors.join(", ")
     );
+    process.exit(2);
   }
 
   process.exit(0);

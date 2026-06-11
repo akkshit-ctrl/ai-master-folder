@@ -66,10 +66,15 @@ MCP configs are stored in `src/mcp/<name>/mcp.json`. Follow these rules:
 echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}' | npx @org/mcp-server-name
 ```
 
+## Common Pitfalls
+- Hardcoding secrets in mcp.json instead of using env var references
+- Using HTTP type when stdio would be simpler and more secure
+- Not testing the server before adding it to a profile
+- Forgetting that the MCP host must have the server's dependencies installed
+
 ## Related
 
 - See existing MCP configs in `src/mcp/` for examples
-- The `src/plugins/` directory handles auth plugins, not MCP servers
 
 ## Rationalizations
 

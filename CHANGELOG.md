@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.3.0] - Portability, Hardening & Polish
+
+- **Model-agnostic**: Removed all 12 hardcoded `claude-sonnet-4-20250514` and `claude-opus-4-20250514` model references from commands and template
+- **OAuth plugins removed**: Deleted all 6 stub OAuth plugins (antigravity-auth, gemini-auth, kilo-gateway-auth, omniroute-auth, openai-codex-auth, openhax-codex)
+- **Default profile**: Changed deploy default from `lean` to `full`
+- **Version bump**: VERSION, opencode.json, and CHANGELOG synced to 0.3.0
+- **Branch detection**: Tools now respect `GIT_DEFAULT_BRANCH` env var; no longer hardcode `main`
+- **`.gitignore` expanded**: Added `node_modules/`, `__pycache__/`, `.venv/`, `.vscode/`, `.idea/`, `*.log`, `Thumbs.db`, `dist/`, `.next/`, `*.tsbuildinfo`
+- **Hook fixes**: `post-edit-validate` now blocks (exit 2) on failure, timeout 30s→60s; `session-end-save` version updated; `hooks.json` schema URL generic
+- **`token-budget-advisor`**: Model-specific names replaced with generic tiers (Flash/Sonnet/Opus-class)
+- **Skills expanded**: Added Common Pitfalls sections to 10 skills (artifact-builder, content-writing, document-processing, explain, iterative-retrieval, mcp-builder, prompt-optimizer, search-first, strategic-compact, token-budget-advisor)
+- **Tool framework detection**: run-tests now detects Mocha, Cypress, Playwright, Ava, Go Test, Cargo Test; lint-check detects golangci-lint, Clippy; format-code detects gofmt, rustfmt; check-coverage detects Go, Cargo Tarpaulin, NYC
+- **Model field convention**: Standardized — `model` field removed from commands with no agent delegation
+- **Documentation**: README updated to reflect `full` default, removed plugin references, generic Claude Code mention
+- **Tests updated**: Removed plugin checks (12), now 210/210 passing
+
 ## [0.2.0] - Restructure, Consolidate & Harden
 
 - **Profiles**: Replaced base.json/web-dev.json with full.json (everything) and lean.json (minimal)

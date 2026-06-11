@@ -2,7 +2,6 @@
 name: cleanup
 description: "Clean up workspace, remove dead code, organize imports."
 agent: ""
-model: claude-sonnet-4-20250514
 subtask: false
 ---
 

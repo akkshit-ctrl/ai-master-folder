@@ -56,6 +56,12 @@ cargo clean && cargo build --release
 - Generate checksums (sha256sum)
 - Tag version in git if releasing
 
+## Common Pitfalls
+- Building without cleaning first → stale artifacts mask issues
+- Forgetting to version artifacts → can't trace which build is which
+- Skipping integrity verification → corrupted artifacts go to production
+- Platform-specific assumptions → fails on cross-platform CI runners
+
 ## Related
 - See `ci-cd-and-automation` skill for CI/CD pipeline integration
 

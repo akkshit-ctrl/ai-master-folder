@@ -2,7 +2,7 @@
 name: debug
 description: "Start a debugging session."
 agent: debug-agent
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

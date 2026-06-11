@@ -2,7 +2,7 @@
 name: quality-gate
 description: "Run verification checks before merge: lint, typecheck, tests, build."
 agent: qa-agent
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

@@ -10,11 +10,16 @@ export default tool(
       .enum(["staged", "unstaged", "branch"])
       .default("staged")
       .describe("Which changes to summarize"),
+    base: z
+      .string()
+      .optional()
+      .describe("Base branch for branch scope"),
   }
 )
-  .args(async ({ scope }) => {
+  .args(async ({ scope, base }) => {
     let diffCommand: string;
     let logCommand: string;
+    const defaultBranch = process.env.GIT_DEFAULT_BRANCH ?? "main";
 
     switch (scope) {
       case "staged":
@@ -26,8 +31,8 @@ export default tool(
         logCommand = "";
         break;
       case "branch":
-        diffCommand = "git diff main...HEAD --stat";
-        logCommand = 'git log main...HEAD --oneline';
+        diffCommand = `git diff ${base ?? defaultBranch}...HEAD --stat`;
+        logCommand = `git log ${base ?? defaultBranch}...HEAD --oneline`;
         break;
     }
 

@@ -2,7 +2,7 @@
 name: build-fix
 description: "Diagnose and resolve build errors."
 agent: build-resolver
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

@@ -51,6 +51,12 @@ What the code does at a high level, its inputs and outputs. Suitable for quick u
 /explain --target src/utils/parse.ts --depth standard
 ```
 
+## Common Pitfalls
+- Explaining what the code does without explaining why → misses design intent
+- Skipping context → the reader doesn't know the surrounding system
+- Over-explaining trivial code → wastes tokens and reader attention
+- Not mentioning trade-offs → readers miss why alternatives were rejected
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

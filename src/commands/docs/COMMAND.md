@@ -2,7 +2,7 @@
 name: docs
 description: "Generate or update documentation."
 agent: docs-writer
-model: claude-sonnet-4-20250514
+model: ""
 subtask: true
 ---
 

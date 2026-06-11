@@ -2,7 +2,6 @@
 name: learn
 description: "Extract patterns from current session and save as reusable knowledge."
 agent: ""
-model: claude-sonnet-4-20250514
 subtask: false
 ---
 

@@ -1,6 +1,6 @@
 # AI Master Folder
 
-Welcome to your **AI Operating System**. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode and Claude Code, designed for broad portability across any AI coding agent.
+Welcome to your **AI Operating System**. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode, designed for broad portability across any AI coding agent.
 
 ## Philosophy
 
@@ -12,13 +12,13 @@ Welcome to your **AI Operating System**. This repository acts as the canonical s
 
 ```powershell
 # Preview what a profile would deploy (no files written)
-.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Preview
+.\scripts\Deploy-OpenCode.ps1 -ProfileName full -Preview
 
-# Deploy globally to ~/.config/opencode
-.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Global -Execute
+# Deploy globally to ~/.config/opencode (defaults to "full" profile)
+.\scripts\Deploy-OpenCode.ps1 -Global -Execute
 
 # Deploy to a specific project
-.\scripts\Deploy-OpenCode.ps1 -ProfileName full -TargetPath "C:\Path\To\Project" -Execute
+.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -TargetPath "C:\Path\To\Project" -Execute
 ```
 
 ## Profiles
@@ -26,7 +26,7 @@ Welcome to your **AI Operating System**. This repository acts as the canonical s
 | Profile | Description |
 |---------|-------------|
 | `lean` | Minimal essentials: core skills, 7 agents, 7 commands. Low token overhead. |
-| `full` | Everything: all 44 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers, 6 plugins. |
+| `full` | Everything: all 44 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers. |
 
 ## Tool Building
 
@@ -49,7 +49,6 @@ ai_master_folder/
 │   ├── tools/             # Custom TypeScript tools (6 tools)
 │   ├── hooks/             # Lifecycle hook scripts + hooks.json
 │   ├── mcp/               # MCP server configurations (7 servers)
-│   ├── plugins/           # Auth plugin stubs (6 plugins)
 │   ├── instructions/      # Injectable checklist snippets
 │   ├── rules/             # Rule files (defense, security, coding, git)
 │   └── contexts/          # Context modes: dev, research, review

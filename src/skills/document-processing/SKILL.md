@@ -60,6 +60,12 @@ Use `openpyxl` or `xlwings`:
 - Handle encoding issues (especially with non-ASCII content)
 - Stream large documents to avoid memory issues
 
+## Common Pitfalls
+- Hardcoding file paths → breaks when documents are moved or deployed
+- Ignoring encoding → non-ASCII characters cause silent corruption
+- Not validating output → generated documents may be partially broken
+- Over-complicating templates → simple string substitution often suffices
+
 ## Rationalizations
 
 | Excuse | Rebuttal |

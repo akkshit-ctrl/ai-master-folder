@@ -2,7 +2,6 @@
 name: commit
 description: "Create a well-formatted git commit with Conventional Commits."
 agent: ""
-model: claude-sonnet-4-20250514
 subtask: false
 ---
 

@@ -1,5 +1,5 @@
 param (
-    [string]$ProfileName = "lean",
+    [string]$ProfileName = "full",
     [string]$TargetPath,
     [switch]$Preview,
     [switch]$Global,
@@ -18,7 +18,7 @@ param (
     Pass -Global to deploy to ~/.config/opencode.
     Pass -TargetPath to deploy to a specific project's .opencode.
 .PARAMETER ProfileName
-    Which profile to deploy: "lean" (default) or "full".
+    Which profile to deploy: "full" (default) or "lean".
 .PARAMETER TargetPath
     Deploy to a specific project directory (creates .opencode subfolder).
 .PARAMETER Preview
@@ -82,7 +82,7 @@ if (!$Execute) {
     if ($Profile.instructions) {
         Write-Host "[Deploy]   Instructions: $($Profile.instructions -join ', ')" -ForegroundColor Gray
     }
-    foreach ($Cat in @("agents", "commands", "skills", "tools", "mcp", "plugins")) {
+    foreach ($Cat in @("agents", "commands", "skills", "tools", "mcp")) {
         if ($Profile.$Cat -and $Profile.$Cat.Count -gt 0) {
             Write-Host "[Deploy]   $Cat : $($Profile.$Cat -join ', ')" -ForegroundColor Gray
         }
@@ -136,7 +136,7 @@ if (Test-Path $SourceAgentsFile) {
 }
 
 # 2. Handle Directory-Based Registry Items
-$Categories = @("skills", "commands", "agents", "mcp", "tools", "plugins")
+$Categories = @("skills", "commands", "agents", "mcp", "tools")
 
 foreach ($Cat in $Categories) {
     $CatDestDir = Join-Path $DestDir $Cat
