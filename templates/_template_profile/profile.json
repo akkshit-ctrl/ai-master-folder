@@ -1,0 +1,13 @@
+{
+  "name": "template-profile",
+  "description": "Describe what this profile is meant to do.",
+  "instructions": [
+    "example-instruction.md"
+  ],
+  "agents": [],
+  "commands": [],
+  "mcp": [],
+  "skills": [],
+  "tools": [],
+  "plugins": []
+}

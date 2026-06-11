@@ -1,0 +1,9 @@
+{
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@modelcontextprotocol/server-filesystem"
+  ],
+  "description": "Filesystem access with configurable allowed directories"
+}

@@ -1,0 +1,12 @@
+{
+  "name": "base",
+  "description": "The absolute core necessities deployed to all environments.",
+  "instructions": [
+    "core-guidelines.md"
+  ],
+  "agents": [],
+  "commands": [],
+  "mcp": [],
+  "skills": [],
+  "tools": []
+}

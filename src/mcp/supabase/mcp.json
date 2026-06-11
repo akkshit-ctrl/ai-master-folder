@@ -1,0 +1,9 @@
+{
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@anthropic/mcp-supabase"
+  ],
+  "description": "Supabase database operations, authentication, and storage management"
+}

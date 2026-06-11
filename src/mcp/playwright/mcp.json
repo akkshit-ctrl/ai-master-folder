@@ -1,0 +1,9 @@
+{
+  "type": "stdio",
+  "command": "npx",
+  "args": [
+    "-y",
+    "@anthropic/mcp-playwright"
+  ],
+  "description": "Playwright browser automation for E2E testing and web scraping"
+}

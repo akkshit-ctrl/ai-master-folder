@@ -1,0 +1,12 @@
+{
+  "name": "web-dev",
+  "description": "Base rules plus frontend and backend web development patterns.",
+  "instructions": [
+    "core-guidelines.md"
+  ],
+  "agents": [],
+  "commands": [],
+  "mcp": [],
+  "skills": [],
+  "tools": []
+}
