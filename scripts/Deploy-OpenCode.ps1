@@ -1,10 +1,39 @@
 param (
-    [string]$ProfileName = "base",
+    [string]$ProfileName = "lean",
     [string]$TargetPath,
     [switch]$Preview,
     [switch]$Global,
+    [switch]$Execute,
     [switch]$GenerateConfig
 )
+
+<#
+.SYNOPSIS
+    Deploy AI Master Folder profile to an OpenCode environment.
+.DESCRIPTION
+    Compiles a profile (full or lean) from src/ into a target .opencode directory.
+    By default runs in dry-run mode (shows what would happen without writing).
+    Pass -Execute to actually perform the deployment.
+    Pass -Preview to write to build/preview/.opencode for inspection.
+    Pass -Global to deploy to ~/.config/opencode.
+    Pass -TargetPath to deploy to a specific project's .opencode.
+.PARAMETER ProfileName
+    Which profile to deploy: "lean" (default) or "full".
+.PARAMETER TargetPath
+    Deploy to a specific project directory (creates .opencode subfolder).
+.PARAMETER Preview
+    Deploy to build/preview/.opencode for inspection (no real targets touched).
+.PARAMETER Global
+    Deploy to $env:USERPROFILE\.config\opencode for system-wide use.
+.PARAMETER Execute
+    Actually write files. Without this flag, runs in dry-run mode.
+.PARAMETER GenerateConfig
+    Also generate an opencode.json in the target directory.
+.EXAMPLE
+    .\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Preview
+    .\scripts\Deploy-OpenCode.ps1 -ProfileName full -Global -Execute
+    .\scripts\Deploy-OpenCode.ps1 -ProfileName lean -TargetPath "C:\Project" -Execute
+#>
 
 $RepoRoot = $PSScriptRoot | Split-Path -Parent
 $SrcDir = Join-Path $RepoRoot "src"
@@ -27,13 +56,9 @@ if ($Preview) {
 
 Write-Host "Target Directory: $DestDir"
 
-if (!(Test-Path $DestDir)) {
-    New-Item -ItemType Directory -Force -Path $DestDir | Out-Null
-}
-
 $ProfilePath = Join-Path $ProfilesDir "$ProfileName.json"
 if (!(Test-Path $ProfilePath)) {
-    Write-Error "Profile '$ProfileName' not found at $ProfilePath"
+    Write-Error "Profile '$ProfileName' not found at $ProfilePath`nAvailable profiles: full, lean"
     exit 1
 }
 
@@ -47,6 +72,41 @@ $DeployedItems = @{
     tools    = @()
     mcp      = @()
     plugins  = @()
+}
+
+# Dry-run mode
+if (!$Execute) {
+    Write-Host "[Deploy] DRY-RUN — use -Execute to actually write files." -ForegroundColor Yellow
+    Write-Host "[Deploy] Would deploy profile '$ProfileName' to: $DestDir" -ForegroundColor Yellow
+
+    if ($Profile.instructions) {
+        Write-Host "[Deploy]   Instructions: $($Profile.instructions -join ', ')" -ForegroundColor Gray
+    }
+    foreach ($Cat in @("agents", "commands", "skills", "tools", "mcp", "plugins")) {
+        if ($Profile.$Cat -and $Profile.$Cat.Count -gt 0) {
+            Write-Host "[Deploy]   $Cat : $($Profile.$Cat -join ', ')" -ForegroundColor Gray
+        }
+    }
+
+    if ($GenerateConfig) {
+        Write-Host "[Deploy]   Would also generate opencode.json" -ForegroundColor Gray
+    }
+
+    Write-Host "[Deploy] Dry-run complete. Pass -Execute to deploy." -ForegroundColor Yellow
+    exit 0
+}
+
+# Backup existing target
+if (Test-Path $DestDir) {
+    $backupDir = Join-Path $RepoRoot "build\backup\$([DateTime]::Now.ToString('yyyyMMdd-HHmmss'))"
+    Write-Host "[Deploy] Backing up existing target to $backupDir" -ForegroundColor DarkYellow
+    New-Item -ItemType Directory -Force -Path $backupDir | Out-Null
+    Copy-Item -Path "$DestDir\*" -Destination $backupDir -Recurse -Force
+}
+
+# Ensure target directory exists
+if (!(Test-Path $DestDir)) {
+    New-Item -ItemType Directory -Force -Path $DestDir | Out-Null
 }
 
 # 1. Handle AGENTS.md Light Templating
@@ -152,4 +212,25 @@ if ($GenerateConfig) {
     Write-Host "  -> Generated opencode.json at $ConfigPath"
 }
 
-Write-Host "Deployment completed successfully." -ForegroundColor Green
+# Verification
+Write-Host "[Deploy] Verification:" -ForegroundColor Cyan
+$errors = 0
+$expectedCount = ($Profile.agents.Count + $Profile.commands.Count + $Profile.skills.Count + $Profile.tools.Count + $Profile.mcp.Count + $Profile.plugins.Count)
+
+if ($Profile.instructions) {
+    $expectedCount++ # AGENTS.md
+}
+
+$actualFiles = @(Get-ChildItem -Path $DestDir -Recurse -File -ErrorAction SilentlyContinue).Count
+Write-Host "  Expected items: $expectedCount | Files in target: $actualFiles" -ForegroundColor Gray
+
+if ($actualFiles -eq 0) {
+    Write-Warning "  No files found in target directory — deployment may be empty."
+    $errors++
+}
+
+if ($errors -eq 0) {
+    Write-Host "Deployment completed successfully." -ForegroundColor Green
+} else {
+    Write-Warning "Deployment completed with $errors verification warnings."
+}

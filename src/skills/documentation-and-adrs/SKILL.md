@@ -28,45 +28,9 @@ Document decisions and systems so that future developers (including your future 
 
 ## Architecture Decision Records (ADRs)
 
-### When to Write an ADR
-- Architectural or design decisions
-- Technology choices (libraries, frameworks, databases)
-- Policy decisions that affect the codebase
-- Any decision with significant cost to reverse
+For detailed ADR guidance including format, lifecycle, and workflow, see the dedicated **`architecture-decision-records`** skill. This section covers how ADRs fit into broader documentation practices.
 
-### ADR Format (MADR)
-```
-# ADR-001: Use Cursor-Based Pagination
-
-## Status
-Accepted
-
-## Context
-The user list API currently returns all users at once.
-As the user base grew to 500K, the endpoint times out.
-
-## Decision
-Implement cursor-based pagination using opaque cursor tokens
-encoded as base64 JSON.
-
-## Consequences
-- (+) Consistent performance regardless of dataset size
-- (+) No phantom row issues (vs offset pagination)
-- (-) Cannot jump to arbitrary pages
-- (-) More complex client implementation
-
-## Compliance
-- [ ] All list endpoints use cursor pagination
-- [ ] Responses include `nextCursor` and `hasMore` fields
-```
-
-### ADR Lifecycle
-```
-Proposed → Accepted → Deprecated → Superseded
-```
-Each transition should reference the ADR that caused it.
-
-## Documentation Rules
+### Documentation Rules
 
 ### Code Proximity
 - Document as close to the code as possible

@@ -1,32 +1,70 @@
 # AI Master Folder
 
-Welcome to your AI Operating System. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode but designed for broad portability.
+Welcome to your **AI Operating System**. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode and Claude Code, designed for broad portability across any AI coding agent.
 
 ## Philosophy
-- **Registry Layer:** The `src/` directory represents your exact inventory of agents, skills, tools, and commands. You edit these files as your ultimate source of truth.
-- **Package Layer:** The `profiles/` directory groups your skills and instructions into deployable packages (e.g., `base`, `web-dev`).
-- **Deployment Layer:** The `scripts/Deploy-OpenCode.ps1` script securely copies specific profiles to your global settings or individual project folders.
 
-## How to Use
+- **Registry Layer:** `src/` contains your complete inventory of agents, skills, tools, commands, hooks, MCP servers, plugins, instructions, rules, and context modes. Edit these files as the source of truth.
+- **Package Layer:** `profiles/` groups items into deployable packages: `full` (everything enabled) or `lean` (minimal, low-token, high-signal).
+- **Deployment Layer:** `scripts/Deploy-OpenCode.ps1` compiles a profile into a target `.opencode` directory. Dry-run by default; pass `-Execute` to write.
 
-### 1. Preview a Deployment
-See what gets compiled before you touch a real project:
+## Quick Start
+
 ```powershell
-.\scripts\Deploy-OpenCode.ps1 -ProfileName "web-dev" -Preview
-```
-This compiles a `.opencode` folder inside `build/preview/.opencode/`.
+# Preview what a profile would deploy (no files written)
+.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Preview
 
-### 2. Deploy Globally
-Update your machine's default OpenCode behavior:
-```powershell
-.\scripts\Deploy-OpenCode.ps1 -ProfileName "base" -Global
-```
+# Deploy globally to ~/.config/opencode
+.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Global -Execute
 
-### 3. Deploy to a Specific Project
-Give a project a specific set of skills (e.g., web-dev):
-```powershell
-.\scripts\Deploy-OpenCode.ps1 -ProfileName "web-dev" -TargetPath "C:\Path\To\Your\Project"
+# Deploy to a specific project
+.\scripts\Deploy-OpenCode.ps1 -ProfileName full -TargetPath "C:\Path\To\Project" -Execute
 ```
 
-## Making Changes
-Please refer to `docs/CONTRIBUTING.md` for naming conventions and rules before adding new items to `src/`.
+## Profiles
+
+| Profile | Description |
+|---------|-------------|
+| `lean` | Minimal essentials: core skills, 7 agents, 7 commands. Low token overhead. |
+| `full` | Everything: all 44 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers, 6 plugins. |
+
+## Tool Building
+
+Custom TypeScript tools in `src/tools/` use `@opencode-ai/plugin` and Zod schemas. The deploy script auto-builds them with `bun build --target=node` if bun is available. To build manually:
+
+```powershell
+bun build --target=node --outdir=. src/tools/<name>/index.ts
+```
+
+## Structure
+
+```
+ai_master_folder/
+├── opencode.json          # Discovery config for OpenCode
+├── src/
+│   ├── AGENTS.md          # Master system prompt (source of truth)
+│   ├── agents/            # Subagent definitions (17 agents)
+│   ├── commands/          # Slash command definitions (20 commands)
+│   ├── skills/            # Skill definitions (44 skills)
+│   ├── tools/             # Custom TypeScript tools (6 tools)
+│   ├── hooks/             # Lifecycle hook scripts + hooks.json
+│   ├── mcp/               # MCP server configurations (7 servers)
+│   ├── plugins/           # Auth plugin stubs (6 plugins)
+│   ├── instructions/      # Injectable checklist snippets
+│   ├── rules/             # Rule files (defense, security, coding, git)
+│   └── contexts/          # Context modes: dev, research, review
+├── profiles/              # Deployment profiles: full.json, lean.json
+├── scripts/               # Deploy-OpenCode.ps1
+├── tests/                 # Invoke-StructureCheck.ps1 validation
+└── templates/             # Scaffolding templates for new items
+```
+
+## Adding New Content
+
+See `docs/CONTRIBUTING.md` for naming conventions. Use templates from `templates/` to scaffold new agents, commands, skills, instructions, or profiles.
+
+## Running Validation
+
+```powershell
+.\tests\Invoke-StructureCheck.ps1
+```

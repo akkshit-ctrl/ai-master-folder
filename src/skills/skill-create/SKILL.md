@@ -1,6 +1,8 @@
 ---
 name: skill-create
 description: "Meta-skill for bootstrapping new skills from observed patterns, git history, or user descriptions."
+aliases:
+  - skill-creator
 version: 1.0.0
 license: MIT
 compatibility:
@@ -91,3 +93,7 @@ allowed-tools:
 | "I'll create the skill without frontmatter" | Frontmatter is required for auto-discovery. Always include it. |
 | "This workflow is too specific to be a skill" | If you've done it twice, it's a candidate for a skill. |
 | "I'll add tests later" | Scaffold the skill properly now. Later means never. |
+
+## Note
+
+This skill replaces the former `skill-creator` — all functionality consolidated here.

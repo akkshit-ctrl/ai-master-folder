@@ -46,5 +46,11 @@ The following rules have been dynamically injected based on the current deployme
 
 <!-- PROFILE_INSTRUCTIONS_INJECT -->
 
-## 7. Final Verification
+## 7. Discovery and Configuration
+This system is registered via `opencode.json` at the repository root, which exposes all agents, commands, and skills to OpenCode. Deploy a profile (lean or full) to apply select items to a specific workspace:
+```powershell
+.\scripts\Deploy-OpenCode.ps1 -ProfileName lean -Global -Execute
+```
+
+## 8. Final Verification
 Always ensure your code compiles and passes standard static analysis checks for the active environment before confirming task completion.

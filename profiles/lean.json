@@ -1,0 +1,45 @@
+{
+  "name": "lean",
+  "description": "Minimal, low-token, high-signal setup — only essential workflow skills, core agents, and most-used commands.",
+  "instructions": [
+    "core-guidelines.md"
+  ],
+  "agents": [
+    "architect",
+    "code-reviewer",
+    "debug-agent",
+    "orchestrator",
+    "planner",
+    "qa-agent",
+    "tester"
+  ],
+  "commands": [
+    "commit",
+    "debug",
+    "docs",
+    "plan",
+    "review",
+    "spec",
+    "test"
+  ],
+  "skills": [
+    "code-review",
+    "debugging",
+    "git-workflow",
+    "plan",
+    "search-first",
+    "testing",
+    "verification-loop"
+  ],
+  "tools": [
+    "changed-files",
+    "git-summary",
+    "lint-check",
+    "run-tests"
+  ],
+  "mcp": [
+    "filesystem",
+    "sequential-thinking"
+  ],
+  "plugins": []
+}
