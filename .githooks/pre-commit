@@ -1,0 +1,16 @@
+#!/bin/sh
+# Regenerate docs/GUIDE.md from src/ before each commit so it never goes stale.
+# Enable once per clone with:  git config core.hooksPath .githooks
+if command -v pwsh >/dev/null 2>&1; then PS=pwsh
+elif command -v powershell >/dev/null 2>&1; then PS=powershell
+else
+  echo "pre-commit: PowerShell not found; skipping GUIDE.md regen" >&2
+  exit 0
+fi
+
+"$PS" -NoProfile -File scripts/Generate-Guide.ps1 >/dev/null 2>&1 || {
+  echo "pre-commit: GUIDE.md generation failed; committing without regen" >&2
+  exit 0
+}
+git add docs/GUIDE.md 2>/dev/null
+exit 0

@@ -18,6 +18,19 @@ jobs:
         shell: pwsh
         run: ./tests/Invoke-StructureCheck.ps1
 
+      # docs/GUIDE.md must be regenerated from src/ (the pre-commit hook does this locally).
+      - name: Check docs/GUIDE.md is up to date
+        shell: pwsh
+        run: |
+          ./scripts/Generate-Guide.ps1
+          $diff = git status --porcelain docs/GUIDE.md
+          if ($diff) {
+            Write-Host "::error::docs/GUIDE.md is stale. Run scripts/Generate-Guide.ps1 and commit."
+            git --no-pager diff docs/GUIDE.md
+            exit 1
+          }
+          Write-Host "GUIDE.md is current."
+
       # Best-effort spec validation against the Agent Skills standard.
       # Non-blocking: the CLI/package name may change, and it is not required for the build.
       - name: Validate SKILL.md against agentskills.io spec (best-effort)

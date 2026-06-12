@@ -72,14 +72,26 @@ ai_master_folder/
 │   ├── instructions/      # Injectable checklist snippets
 │   └── rules/             # Universal rules (injected into AGENTS.md at deploy)
 ├── profiles/              # Deployment profiles: full.json, lean.json
-├── scripts/               # Deploy-OpenCode.ps1
+├── scripts/               # Deploy-OpenCode.ps1, Generate-Guide.ps1
 ├── tests/                 # Invoke-StructureCheck.ps1 + Verify-Runtime.md
+├── docs/                  # GUIDE.md (auto-generated usage reference), CONTRIBUTING.md
+├── .githooks/             # pre-commit hook that keeps GUIDE.md current
 └── templates/             # Scaffolding templates for new items
 ```
 
 ## Adding New Content
 
 See `docs/CONTRIBUTING.md` for naming conventions. Use templates from `templates/` to scaffold new agents, commands, skills, instructions, or profiles.
+
+**`docs/GUIDE.md` is auto-generated** from `src/` by `scripts/Generate-Guide.ps1`. A git
+pre-commit hook regenerates it on every commit so it never goes stale — enable it once per
+clone with `git config core.hooksPath .githooks`. CI also fails if the guide is out of date.
+
+### The update loop (after changing anything in `src/`)
+1. Edit/add in `src/`, and register it in `profiles/full.json` (+ the harness's expected list).
+2. `.\tests\Invoke-StructureCheck.ps1` → must pass.
+3. `git commit` (the hook refreshes `docs/GUIDE.md` automatically) and `git push`.
+4. `.\scripts\Deploy-OpenCode.ps1 -ProfileName full -Global -Execute`, then restart OpenCode.
 
 ## Running Validation
 

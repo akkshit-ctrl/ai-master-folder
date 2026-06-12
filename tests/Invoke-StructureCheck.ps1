@@ -255,6 +255,9 @@ $deployPath = Join-Path (Join-Path $RepoRoot "scripts") "Deploy-OpenCode.ps1"
 Test-Check "scripts/Deploy-OpenCode.ps1" (Test-Path $deployPath)
 $testHarnessPath = Join-Path (Join-Path $RepoRoot "tests") "Invoke-StructureCheck.ps1"
 Test-Check "tests/Invoke-StructureCheck.ps1" (Test-Path $testHarnessPath)
+Test-Check "scripts/Generate-Guide.ps1" (Test-Path (Join-Path (Join-Path $RepoRoot "scripts") "Generate-Guide.ps1"))
+Test-Check "docs/GUIDE.md (generated)" (Test-Path (Join-Path (Join-Path $RepoRoot "docs") "GUIDE.md"))
+Test-Check ".githooks/pre-commit" (Test-Path (Join-Path (Join-Path $RepoRoot ".githooks") "pre-commit"))
 
 # 15. Templates
 $expectedTemplates = @(
