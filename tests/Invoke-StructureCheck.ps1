@@ -140,10 +140,11 @@ $expectedSkills = @(
     "evidence-based-audit", "explain", "git-workflow", "iterative-retrieval", "mcp-builder",
     "observability-and-instrumentation", "performance-audit", "plan",
     "postgres-patterns", "project-init", "prompt-optimizer", "pull-request",
-    "python-patterns", "refactoring", "search-first", "security-review",
-    "shipping-and-launch", "skill-create", "source-driven-development",
-    "spec-driven-development", "strategic-compact", "tdd-workflow",
-    "testing", "token-budget-advisor", "typescript-patterns", "verification-loop"
+    "python-patterns", "react-best-practices", "refactoring", "search-first",
+    "security-review", "shipping-and-launch", "skill-create",
+    "source-driven-development", "spec-driven-development", "strategic-compact",
+    "subagent-orchestration", "tdd-workflow", "testing", "token-budget-advisor",
+    "typescript-patterns", "ui-ux-pro-max", "verification-loop"
 )
 
 foreach ($skill in $expectedSkills) {

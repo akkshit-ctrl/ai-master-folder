@@ -34,7 +34,7 @@ Welcome to your **AI Operating System**. This repository acts as the canonical s
 | Profile | Description |
 |---------|-------------|
 | `lean` | Minimal essentials: core skills, 7 agents, 7 commands. Low token overhead. |
-| `full` | Everything: all 46 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers, lifecycle plugin. |
+| `full` | Everything: all 49 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers, lifecycle plugin. |
 
 ## How deployment maps to OpenCode
 
@@ -65,7 +65,7 @@ ai_master_folder/
 │   ├── AGENTS.md          # Master system prompt (rules + instructions inject at deploy)
 │   ├── agents/            # Subagent definitions (17 agents)
 │   ├── commands/          # Slash command definitions (20 commands)
-│   ├── skills/            # Skill definitions (46 skills)
+│   ├── skills/            # Skill definitions (49 skills)
 │   ├── tools/             # Custom TypeScript tools (6 tools)
 │   ├── plugins/           # Native OpenCode lifecycle-hook plugin
 │   ├── mcp/               # MCP server configurations (7 servers)

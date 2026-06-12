@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.1] - New Skills
+
+- **3 new skills** (46 → 49), spec-compliant with progressive-disclosure `references/`:
+  - `react-best-practices` — React/Next.js performance patterns (Vercel Engineering).
+  - `subagent-orchestration` — parallel fan-out + subagent-driven task execution (superpowers).
+  - `ui-ux-pro-max` — UI/UX design intelligence (styles, palettes, font pairings, components).
+- Refreshed several existing skills (code-review, debugging, plan, skill-create, tdd-workflow).
+- Registered in `profiles/full.json` and the validation harness (363/363 passing).
+
 ## [0.5.0] - Make It Actually Work in OpenCode
 
 Verified the deployed system against real OpenCode 1.17.3 and fixed everything that did not
