@@ -17,7 +17,8 @@ export default tool("format-code", "Format code using project formatter", {
 })
   .args(async ({ files, check }) => {
     const cwd = process.cwd();
-    const targets = files?.join(" ") ?? ".";
+    const safeFiles = files?.filter(f => /^[\w.\-/\\@]+$/.test(f));
+    const targets = safeFiles?.join(" ") ?? ".";
     const checkFlag = check ? "--check" : "";
 
     const prettierConfigs = [".prettierrc", ".prettierrc.json", ".prettierrc.yaml", ".prettierrc.yml", ".prettierrc.toml", "prettier.config.js", "prettier.config.mjs"];

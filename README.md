@@ -41,6 +41,8 @@ bun build --target=node --outdir=. src/tools/<name>/index.ts
 ```
 ai_master_folder/
 ├── opencode.json          # Discovery config for OpenCode
+├── core/                  # Universal, tool-agnostic rules & instructions
+├── adapters/              # Tool-specific configs (opencode, cursor, ...)
 ├── src/
 │   ├── AGENTS.md          # Master system prompt (source of truth)
 │   ├── agents/            # Subagent definitions (17 agents)

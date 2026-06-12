@@ -1,4 +1,4 @@
-param (
+﻿param (
     [string]$ProfileName = "full",
     [string]$TargetPath,
     [switch]$Preview,
@@ -71,28 +71,28 @@ $DeployedItems = @{
     skills   = @()
     tools    = @()
     mcp      = @()
-    plugins  = @()
 }
 
 # Dry-run mode
 if (!$Execute) {
-    Write-Host "[Deploy] DRY-RUN — use -Execute to actually write files." -ForegroundColor Yellow
+    Write-Host "[Deploy] DRY-RUN - use -Execute to actually write files." -ForegroundColor Yellow
     Write-Host "[Deploy] Would deploy profile '$ProfileName' to: $DestDir" -ForegroundColor Yellow
 
     if ($Profile.instructions) {
         Write-Host "[Deploy]   Instructions: $($Profile.instructions -join ', ')" -ForegroundColor Gray
     }
-    foreach ($Cat in @("agents", "commands", "skills", "tools", "mcp")) {
+    $Categories = @("agents", "commands", "skills", "tools", "mcp")
+    foreach ($Cat in $Categories) {
         if ($Profile.$Cat -and $Profile.$Cat.Count -gt 0) {
             Write-Host "[Deploy]   $Cat : $($Profile.$Cat -join ', ')" -ForegroundColor Gray
         }
     }
 
     if ($GenerateConfig) {
-        Write-Host "[Deploy]   Would also generate opencode.json" -ForegroundColor Gray
+        Write-Host 'Would also generate opencode.json' -ForegroundColor Gray
     }
 
-    Write-Host "[Deploy] Dry-run complete. Pass -Execute to deploy." -ForegroundColor Yellow
+    Write-Host 'Dry-run complete. Pass -Execute to deploy.' -ForegroundColor Yellow
     exit 0
 }
 
@@ -215,7 +215,7 @@ if ($GenerateConfig) {
 # Verification
 Write-Host "[Deploy] Verification:" -ForegroundColor Cyan
 $errors = 0
-$expectedCount = ($Profile.agents.Count + $Profile.commands.Count + $Profile.skills.Count + $Profile.tools.Count + $Profile.mcp.Count + $Profile.plugins.Count)
+$expectedCount = ($Profile.agents.Count + $Profile.commands.Count + $Profile.skills.Count + $Profile.tools.Count + $Profile.mcp.Count)
 
 if ($Profile.instructions) {
     $expectedCount++ # AGENTS.md
@@ -225,7 +225,7 @@ $actualFiles = @(Get-ChildItem -Path $DestDir -Recurse -File -ErrorAction Silent
 Write-Host "  Expected items: $expectedCount | Files in target: $actualFiles" -ForegroundColor Gray
 
 if ($actualFiles -eq 0) {
-    Write-Warning "  No files found in target directory — deployment may be empty."
+    Write-Warning "  No files found in target directory - deployment may be empty."
     $errors++
 }
 

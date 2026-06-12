@@ -22,7 +22,8 @@ export default tool("run-tests", "Run project tests with framework detection", {
 })
   .args(async ({ files, watch, coverage }) => {
     const cwd = process.cwd();
-    const targets = files?.join(" ") ?? "";
+    const safeFiles = files?.filter(f => /^[\w.\-/\\@]+$/.test(f));
+    const targets = safeFiles?.join(" ") ?? "";
     const watchFlag = watch ? "--watch" : "";
     const coverageFlag = coverage ? "--coverage" : "";
 

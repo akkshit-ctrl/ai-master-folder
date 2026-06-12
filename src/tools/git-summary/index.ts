@@ -20,6 +20,7 @@ export default tool(
     let diffCommand: string;
     let logCommand: string;
     const defaultBranch = process.env.GIT_DEFAULT_BRANCH ?? "main";
+    const safeBase = base && /^[\w.\-/]+$/.test(base) ? base : defaultBranch;
 
     switch (scope) {
       case "staged":
@@ -31,8 +32,8 @@ export default tool(
         logCommand = "";
         break;
       case "branch":
-        diffCommand = `git diff ${base ?? defaultBranch}...HEAD --stat`;
-        logCommand = `git log ${base ?? defaultBranch}...HEAD --oneline`;
+        diffCommand = `git diff ${safeBase}...HEAD --stat`;
+        logCommand = `git log ${safeBase}...HEAD --oneline`;
         break;
     }
 

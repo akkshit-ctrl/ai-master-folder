@@ -190,15 +190,59 @@ foreach ($hook in $expectedHooks) {
     Test-Check "hook: $hook.js" (Test-Path $path)
 }
 
-# 12. Deploy script
+# 12. Cross-Reference: opencode.json vs disk
+Write-Host "`n[Cross-Reference]" -ForegroundColor Yellow
+$configPath = Join-Path $RepoRoot "opencode.json"
+if (Test-Path $configPath) {
+    $config = Get-Content $configPath -Raw | ConvertFrom-Json
+
+    # Agents: config vs disk
+    $configAgents = @($config.agents.PSObject.Properties.Name)
+    foreach ($a in $expectedAgents) {
+        Test-Check "opencode.json lists agent: $a" ($a -in $configAgents)
+    }
+
+    # Commands: config vs disk
+    $configCommands = @($config.commands.PSObject.Properties.Name)
+    foreach ($c in $expectedCommands) {
+        Test-Check "opencode.json lists command: $c" ($c -in $configCommands)
+    }
+
+    # Skills: config vs disk
+    $configSkills = @($config.skills)
+    foreach ($s in $expectedSkills) {
+        Test-Check "opencode.json lists skill: $s" ($s -in $configSkills)
+    }
+}
+
+# 13. No plugins vestige
+Write-Host "`n[No Plugins]" -ForegroundColor Yellow
+$noPluginsDirs = -not (Test-Path (Join-Path $SrcDir "plugins"))
+Test-Check "No src/plugins/ directory" $noPluginsDirs
+foreach ($profile in @("full", "lean")) {
+    $path = Join-Path (Join-Path $RepoRoot "profiles") "$profile.json"
+    if (Test-Path $path) {
+        $content = Get-Content $path -Raw
+        $hasPlugins = $content -match '"plugins"'
+        Test-Check "profile $profile.json has no plugins key" (-not $hasPlugins)
+    }
+}
+
+# 14. Core directory
+Write-Host "`n[Core & Adapters]" -ForegroundColor Yellow
+Test-Check "core/README.md exists" (Test-Path (Join-Path $RepoRoot "core\README.md"))
+Test-Check "adapters/README.md exists" (Test-Path (Join-Path $RepoRoot "adapters\README.md"))
+Test-Check "adapters/opencode/README.md exists" (Test-Path (Join-Path $RepoRoot "adapters\opencode\README.md"))
+Test-Check "adapters/cursor/README.md exists" (Test-Path (Join-Path $RepoRoot "adapters\cursor\README.md"))
+
+# 14. Deploy script
 Write-Host "`n[Scripts]" -ForegroundColor Yellow
 $deployPath = Join-Path (Join-Path $RepoRoot "scripts") "Deploy-OpenCode.ps1"
 Test-Check "scripts/Deploy-OpenCode.ps1" (Test-Path $deployPath)
 $testHarnessPath = Join-Path (Join-Path $RepoRoot "tests") "Invoke-StructureCheck.ps1"
 Test-Check "tests/Invoke-StructureCheck.ps1" (Test-Path $testHarnessPath)
 
-# 14. Templates
-Write-Host "`n[Templates]" -ForegroundColor Yellow
+# 15. Templates
 $expectedTemplates = @(
     @{"dir"="_template_agent"; "file"="AGENT.md"},
     @{"dir"="_template_command"; "file"="COMMAND.md"},
@@ -212,7 +256,7 @@ foreach ($t in $expectedTemplates) {
     Test-Check "template: $($t['dir'])/$($t['file'])" (Test-Path $path)
 }
 
-# 15. No orphan empty directories
+# 16. No orphan empty directories
 Write-Host "`n[Integrity]" -ForegroundColor Yellow
 $emptyDirs = @()
 Get-ChildItem -Path $SrcDir -Directory -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
@@ -229,7 +273,7 @@ if ($emptyDirs.Count -eq 0) {
     Test-Check "No empty directories in src/" $false
 }
 
-# 16. No orphan empty scripts/ dirs
+# 17. No orphan empty scripts/ dirs
 $orphanScripts = @()
 Get-ChildItem -Path $SrcDir -Recurse -Directory -Filter "scripts" -ErrorAction SilentlyContinue | ForEach-Object {
     $children = @(Get-ChildItem -LiteralPath $_.FullName -File -ErrorAction SilentlyContinue)

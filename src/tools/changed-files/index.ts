@@ -15,6 +15,7 @@ export default tool("changed-files", "Get list of changed files from git", {
   .args(async ({ scope, base }) => {
     let command: string;
     const defaultBranch = process.env.GIT_DEFAULT_BRANCH ?? "main";
+    const safeBase = base && /^[\w.\-/]+$/.test(base) ? base : defaultBranch;
 
     switch (scope) {
       case "staged":
@@ -24,7 +25,7 @@ export default tool("changed-files", "Get list of changed files from git", {
         command = "git diff --name-only";
         break;
       case "branch":
-        command = `git diff --name-only ${base ?? defaultBranch}...HEAD`;
+        command = `git diff --name-only ${safeBase}...HEAD`;
         break;
       case "all":
         command =

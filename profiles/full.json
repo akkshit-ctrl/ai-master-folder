@@ -111,6 +111,5 @@
     "sentry",
     "sequential-thinking",
     "supabase"
-  ],
-  "plugins": []
+  ]
 }

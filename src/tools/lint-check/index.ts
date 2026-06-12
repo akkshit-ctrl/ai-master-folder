@@ -17,7 +17,8 @@ export default tool("lint-check", "Run linter on project files", {
 })
   .args(async ({ files, fix }) => {
     const cwd = process.cwd();
-    const targets = files?.join(" ") ?? ".";
+    const safeFiles = files?.filter(f => /^[\w.\-/\\@]+$/.test(f));
+    const targets = safeFiles?.join(" ") ?? ".";
     const fixFlag = fix ? "--fix" : "";
 
     if (existsSync(join(cwd, "eslint.config.js")) || existsSync(join(cwd, ".eslintrc.js"))) {

@@ -40,6 +40,5 @@
   "mcp": [
     "filesystem",
     "sequential-thinking"
-  ],
-  "plugins": []
+  ]
 }
