@@ -1,16 +1,12 @@
 ---
 name: planner
 description: "Creates structured implementation plans from requirements using deep reasoning."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.1
-permissions:
-  - read
-  - glob
-  - grep
 color: "#F39C12"
-instructions: []
+permission:
+  edit: deny
+  bash: deny
 ---
 
 # Role

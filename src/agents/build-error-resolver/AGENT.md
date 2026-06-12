@@ -1,18 +1,12 @@
 ---
 name: build-error-resolver
 description: "Diagnoses and resolves build and compilation errors across languages."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - bash
-  - grep
-  - glob
-  - edit
 color: "#C0392B"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

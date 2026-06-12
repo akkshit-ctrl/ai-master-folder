@@ -1,17 +1,12 @@
 ---
 name: performance-optimizer
 description: "Identifies performance bottlenecks and suggests targeted optimizations."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - bash
-  - grep
-  - glob
 color: "#E67E22"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

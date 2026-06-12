@@ -1,19 +1,12 @@
 ---
 name: refactor-cleaner
 description: "Performs code cleanup and refactoring: removes dead code, simplifies logic, improves structure."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - edit
-  - write
-  - bash
-  - grep
-  - glob
 color: "#1ABC9C"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

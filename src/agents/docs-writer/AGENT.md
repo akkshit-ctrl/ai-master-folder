@@ -1,18 +1,12 @@
 ---
 name: docs-writer
 description: "Generates and updates documentation from code context."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.4
-permissions:
-  - read
-  - glob
-  - grep
-  - edit
-  - write
 color: "#2ECC71"
-instructions: []
+permission:
+  edit: allow
+  bash: deny
 ---
 
 # Role

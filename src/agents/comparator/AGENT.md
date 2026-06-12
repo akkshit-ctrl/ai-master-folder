@@ -1,17 +1,12 @@
 ---
 name: comparator
 description: "Compares files, branches, configurations, or outputs to identify meaningful differences."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - bash
-  - grep
-  - glob
 color: "#2980B9"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

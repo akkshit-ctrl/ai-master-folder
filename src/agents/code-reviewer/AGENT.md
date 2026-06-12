@@ -1,18 +1,12 @@
 ---
 name: code-reviewer
 description: "Reviews code for correctness, security, style, performance, and edge cases."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - glob
-  - grep
-  - bash
-  - edit
 color: "#E67E22"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

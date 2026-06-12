@@ -1,16 +1,12 @@
 ---
 name: security-reviewer
 description: "Lightweight security review focused on common vulnerabilities and secret detection."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.1
-permissions:
-  - read
-  - glob
-  - grep
 color: "#C0392B"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

@@ -1,17 +1,12 @@
 ---
 name: build-resolver
 description: "Diagnoses and resolves build errors across languages and toolchains."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - bash
-  - grep
-  - glob
 color: "#E74C3C"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

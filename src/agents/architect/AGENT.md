@@ -1,17 +1,12 @@
 ---
 name: architect
 description: "Designs system architecture, evaluates trade-offs, and produces structured ADRs."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - glob
-  - grep
-  - write
 color: "#8E44AD"
-instructions: []
+permission:
+  edit: allow
+  bash: deny
 ---
 
 # Role

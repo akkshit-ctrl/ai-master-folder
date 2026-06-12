@@ -1,17 +1,12 @@
 ---
 name: security-auditor
 description: "Audits code for security vulnerabilities and compliance issues."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.1
-permissions:
-  - read
-  - glob
-  - grep
-  - bash
 color: "#E74C3C"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

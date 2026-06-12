@@ -1,17 +1,12 @@
 ---
 name: qa-agent
 description: "Runs quality verification gates: lint, typecheck, test, build, security scan."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.1
-permissions:
-  - read
-  - bash
-  - grep
-  - glob
 color: "#3498DB"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

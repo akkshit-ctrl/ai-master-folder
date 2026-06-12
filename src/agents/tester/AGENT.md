@@ -1,18 +1,12 @@
 ---
 name: tester
 description: "Generates and runs tests following TDD methodology."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.2
-permissions:
-  - read
-  - bash
-  - glob
-  - grep
-  - edit
 color: "#3498DB"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

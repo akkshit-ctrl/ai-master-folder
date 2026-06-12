@@ -1,16 +1,12 @@
 ---
 name: grader
 description: "Evaluates code quality, completeness, and adherence to standards against defined criteria."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.1
-permissions:
-  - read
-  - glob
-  - grep
 color: "#27AE60"
-instructions: []
+permission:
+  edit: deny
+  bash: allow
 ---
 
 # Role

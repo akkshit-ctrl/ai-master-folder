@@ -106,6 +106,10 @@ foreach ($agent in $expectedAgents) {
     if ($exists) {
         $fields = @("name", "description", "mode")
         Check-Frontmatter "  $agent frontmatter (name, description, mode)" $path $fields
+        $ac = Get-Content $path -Raw
+        $fm = [regex]::Match($ac, '^---\s*\n(.*?)\n---', 'Singleline').Groups[1].Value
+        $okPerm = ([regex]::IsMatch($fm, '(?m)^permission\s*:')) -and (-not [regex]::IsMatch($fm, '(?m)^permissions\s*:'))
+        Test-Check "  $agent uses OpenCode permission: object (not legacy permissions: list)" $okPerm
     }
 }
 

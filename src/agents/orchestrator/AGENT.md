@@ -1,19 +1,12 @@
 ---
 name: orchestrator
 description: "Coordinates sub-agents for complex multi-step tasks."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.3
-permissions:
-  - read
-  - bash
-  - glob
-  - grep
-  - edit
-  - write
 color: "#1ABC9C"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

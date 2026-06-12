@@ -1,18 +1,14 @@
 ---
 name: example-agent
 description: "A specialized agent designed to handle [Task]."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.3
-permissions:
-  - read
-  - edit
-  - bash
-  - glob
-  - grep
 color: "#4A90D9"
-instructions: []
+# OpenCode permission model — restrict by role. allow | ask | deny.
+# read/grep/glob are always available; control file edits and shell here.
+permission:
+  edit: allow   # deny for read-only/analyst agents (reviewers, planners, auditors)
+  bash: allow   # deny if the agent never needs to run commands
 ---
 
 # Role

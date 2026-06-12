@@ -1,18 +1,12 @@
 ---
 name: debug-agent
 description: "Systematic debugging using hypothesis-driven root cause analysis."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.3
-permissions:
-  - read
-  - bash
-  - glob
-  - grep
-  - edit
 color: "#9B59B6"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role

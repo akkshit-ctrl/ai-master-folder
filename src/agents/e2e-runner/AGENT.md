@@ -1,17 +1,12 @@
 ---
 name: e2e-runner
 description: "Runs and manages end-to-end browser tests using Playwright."
-version: 1.0.0
 mode: subagent
-
 temperature: 0.3
-permissions:
-  - read
-  - bash
-  - glob
-  - grep
 color: "#2ECC71"
-instructions: []
+permission:
+  edit: allow
+  bash: allow
 ---
 
 # Role
