@@ -51,10 +51,13 @@ function Check-Frontmatter($label, $path, $fields) {
     }
 }
 
-# Validate a SKILL.md against the agentskills.io frontmatter spec:
-#  - `version` must be nested under metadata (no top-level version)
-#  - `compatibility` must be a scalar string (not a YAML list)
-#  - `allowed-tools` must be a scalar string (not a YAML list)
+# Validate a SKILL.md against the agentskills.io frontmatter spec.
+# Per the spec only `name` + `description` are required (checked separately); everything
+# below is FORMAT validation of optional fields - present-and-wrong fails, absent is fine.
+# This accepts spec-minimal third-party skills (e.g. imported community skills).
+#  - `version`, if present, must be nested under metadata (no top-level `version:`)
+#  - `compatibility`, if present, must be a scalar string (not a YAML list)
+#  - `allowed-tools`, if present, must be a scalar string (not a YAML list)
 function Test-SkillSpec($path) {
     if (!(Test-Path $path)) { return $false }
     $content = Get-Content $path -Raw
@@ -62,12 +65,12 @@ function Test-SkillSpec($path) {
     if (!$match.Success) { return $false }
     $fm = $match.Groups[1].Value
 
-    # No top-level version; metadata block carries an indented version
+    # version must never be a top-level key (it belongs under metadata)
     if ([regex]::IsMatch($fm, '(?m)^version\s*:')) { return $false }
-    if (!([regex]::IsMatch($fm, '(?m)^\s+version\s*:\s*\S'))) { return $false }
-    # compatibility / allowed-tools must have a scalar value on the same line
-    if (!([regex]::IsMatch($fm, '(?m)^compatibility\s*:\s*\S'))) { return $false }
-    if (!([regex]::IsMatch($fm, '(?m)^allowed-tools\s*:\s*\S'))) { return $false }
+    # compatibility, if present, must be scalar (value on the same line, not a list)
+    if ([regex]::IsMatch($fm, '(?m)^compatibility\s*:\s*$')) { return $false }
+    # allowed-tools, if present, must be scalar (value on the same line, not a list)
+    if ([regex]::IsMatch($fm, '(?m)^allowed-tools\s*:\s*$')) { return $false }
     return $true
 }
 
@@ -132,24 +135,11 @@ foreach ($cmd in $expectedCommands) {
     }
 }
 
-# 5. Skills
+# 5. Skills - derived from disk so every skill (incl. imported/community ones) is verified
+# and cross-checked against full.json. No hand-maintained list to keep in sync.
 Write-Host "`n[Skills]" -ForegroundColor Yellow
-$expectedSkills = @(
-    "api-and-interface-design", "architecture-decision-records", "artifact-builder",
-    "browser-testing", "changelog-generation", "ci-cd-and-automation",
-    "code-analysis", "code-review", "code-simplification", "content-writing",
-    "context-engineering", "continuous-learning", "cross-agent-porting", "debugging",
-    "deprecation-and-migration", "docker-patterns", "document-processing",
-    "documentation-and-adrs", "doubt-driven-development", "error-handling",
-    "evidence-based-audit", "explain", "git-workflow", "iterative-retrieval", "mcp-builder",
-    "observability-and-instrumentation", "performance-audit", "plan",
-    "postgres-patterns", "project-init", "prompt-optimizer", "pull-request",
-    "python-patterns", "react-best-practices", "refactoring", "search-first",
-    "security-review", "shipping-and-launch", "skill-create",
-    "source-driven-development", "spec-driven-development", "strategic-compact",
-    "subagent-orchestration", "tdd-workflow", "testing", "token-budget-advisor",
-    "typescript-patterns", "ui-ux-pro-max", "verification-loop"
-)
+$expectedSkills = @(Get-ChildItem (Join-Path $SrcDir "skills") -Directory -ErrorAction SilentlyContinue |
+    Select-Object -ExpandProperty Name | Sort-Object)
 
 foreach ($skill in $expectedSkills) {
     $path = Join-Path (Join-Path $SrcDir "skills") $skill

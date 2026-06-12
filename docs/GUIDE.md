@@ -65,7 +65,7 @@ Call a specialist directly with `@name`. **edit/bash** = what each may do.
 | `@security-reviewer` | Lightweight security review focused on common vulnerabilities and secret detection. | no | yes | `/security-scan` |
 | `@tester` | Generates and runs tests following TDD methodology. | yes | yes | `/test` |
 
-## Skills (49) - automatic
+## Skills (51) - automatic
 
 You never call these; they load when your request matches. Listed by category for reference.
 
@@ -117,6 +117,11 @@ You never call these; they load when your request matches. Listed by category fo
 - `ci-cd-and-automation` - Design CI/CD pipelines and automation that catch issues early and ship reliably. Use when creating or fixing GitHub Actions/CI workflows, build/test/deploy automation, or release pipelines.
 - `observability-and-instrumentation` - Add structured logging, metrics, tracing, and monitoring. Use when instrumenting code, debugging production behavior, or adding logs, metrics, or traces.
 
+**other**
+
+- `supabase` - Use when doing ANY task involving Supabase. Triggers: Supabase products (Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues); client libraries and SSR integrations (supabase-j...
+- `supabase-postgres-best-practices` - Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.
+
 **security**
 
 - `security-review` - OWASP-based security audit: vulnerability scanning, CVE dependency check, threat modeling. Use when reviewing code for security issues or auditing for vulnerabilities.
@@ -166,7 +171,7 @@ Available to the model when relevant (some require a token/login first).
 - `playwright` - Playwright browser automation for E2E testing and web scraping (official Microsoft Playwright MCP)
 - `sentry` - Sentry error tracking and performance monitoring (hosted MCP; authenticates via OAuth on first use)
 - `sequential-thinking` - Structured chain-of-thought reasoning for complex problem solving
-- `supabase` - Supabase database, auth, and storage management (official). Requires SUPABASE_ACCESS_TOKEN.
+- `supabase` - Supabase project management (hosted MCP; authenticates via OAuth on first use)
 
 ## Background plugin - automatic
 

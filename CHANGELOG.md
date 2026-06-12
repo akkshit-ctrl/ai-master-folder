@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.5.2] - Skill Imports & One-Command Importer
+
+- **Imported 2 community skills** (49 → 51): `supabase` and `supabase-postgres-best-practices`
+  (from Supabase's agent-skills). Supabase MCP pointed at the hosted endpoint.
+- **`scripts/Import-Skill.ps1`** — import a skill from a local folder or git URL in one step:
+  copies into `src/skills/`, registers in `profiles/full.json`, and validates. No hand-editing.
+- **Harness now derives the skill list from disk** — every skill (including imported ones) is
+  validated and cross-checked against `full.json`; no hand-maintained list to keep in sync.
+- **Relaxed `Test-SkillSpec` to match the official spec** — `compatibility`/`allowed-tools`/
+  `version` are optional; the harness validates their *format if present* instead of requiring
+  them, so spec-minimal community skills import cleanly. Agent permission fix verified (391/391).
+- **Agent fix (carried from prior work)**: agents now use OpenCode's `permission:` object;
+  read-only agents (planner, reviewers, auditors) can no longer edit files.
+
 ## [0.5.1] - New Skills
 
 - **3 new skills** (46 → 49), spec-compliant with progressive-disclosure `references/`:

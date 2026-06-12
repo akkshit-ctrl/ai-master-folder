@@ -87,8 +87,17 @@ See `docs/CONTRIBUTING.md` for naming conventions. Use templates from `templates
 pre-commit hook regenerates it on every commit so it never goes stale — enable it once per
 clone with `git config core.hooksPath .githooks`. CI also fails if the guide is out of date.
 
+### Importing a skill (from a folder or git repo)
+One command copies it into `src/`, registers it in `profiles/full.json`, and validates:
+```powershell
+.\scripts\Import-Skill.ps1 -Path "C:\path\to\skill"
+.\scripts\Import-Skill.ps1 -GitUrl "https://github.com/user/repo" -SubPath "skills/cool-skill"
+```
+Then commit + redeploy (steps 3-4 below). The harness derives its skill list from disk, so
+nothing else needs editing.
+
 ### The update loop (after changing anything in `src/`)
-1. Edit/add in `src/`, and register it in `profiles/full.json` (+ the harness's expected list).
+1. Edit/add in `src/` (for skills, `Import-Skill.ps1` does this + registration for you).
 2. `.\tests\Invoke-StructureCheck.ps1` → must pass.
 3. `git commit` (the hook refreshes `docs/GUIDE.md` automatically) and `git push`.
 4. `.\scripts\Deploy-OpenCode.ps1 -ProfileName full -Global -Execute`, then restart OpenCode.

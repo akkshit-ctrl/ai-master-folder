@@ -1,12 +1,5 @@
 {
-  "type": "stdio",
-  "command": "npx",
-  "args": [
-    "-y",
-    "@supabase/mcp-server-supabase@latest"
-  ],
-  "env": {
-    "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
-  },
-  "description": "Supabase database, auth, and storage management (official). Requires SUPABASE_ACCESS_TOKEN."
+  "type": "http",
+  "url": "https://mcp.supabase.com/mcp?project_ref=zwjnecuirrxywjbrxydm&features=branching%2Cstorage%2Cfunctions%2Cdevelopment%2Cdebugging%2Cdatabase%2Caccount%2Cdocs",
+  "description": "Supabase project management (hosted MCP; authenticates via OAuth on first use)"
 }

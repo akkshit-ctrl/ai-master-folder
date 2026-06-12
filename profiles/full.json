@@ -1,6 +1,6 @@
 {
   "name": "full",
-  "description": "Universal system — all agents, commands, skills, tools, MCP, plugins, and instructions enabled.",
+  "description": "Universal system â€” all agents, commands, skills, tools, MCP, plugins, and instructions enabled.",
   "instructions": [
     "core-guidelines.md",
     "code-review-checklist.md",
@@ -66,8 +66,8 @@
     "debugging",
     "deprecation-and-migration",
     "docker-patterns",
-    "document-processing",
     "documentation-and-adrs",
+    "document-processing",
     "doubt-driven-development",
     "error-handling",
     "evidence-based-audit",
@@ -93,6 +93,8 @@
     "spec-driven-development",
     "strategic-compact",
     "subagent-orchestration",
+    "supabase",
+    "supabase-postgres-best-practices",
     "tdd-workflow",
     "testing",
     "token-budget-advisor",
