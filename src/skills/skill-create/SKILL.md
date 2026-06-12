@@ -1,13 +1,12 @@
 ---
 name: skill-create
-description: "Meta-skill for bootstrapping new skills from observed patterns, git history, or user descriptions."
+description: "Meta-skill for bootstrapping new skills from observed patterns, git history, or user descriptions. Use when creating a new skill or scaffolding skill structure and frontmatter."
 aliases:
   - skill-creator
-version: 1.0.0
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "meta"
   tags:
@@ -15,13 +14,7 @@ metadata:
     - meta
     - bootstrapping
     - scaffolding
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Skill Create
@@ -42,31 +35,38 @@ Meta-skill for creating new skills programmatically.
 - What are the key steps?
 
 ### Step 2: Scaffold the Structure
+
+Keep `SKILL.md` small and load detail on demand (progressive disclosure). Supporting
+directories are **optional** — add them only when content would otherwise bloat `SKILL.md`:
+
 ```
 src/skills/<skill-name>/
-├── SKILL.md        # Required: skill definition
-├── scripts/        # Required: helper scripts (can be empty)
-└── references/     # Optional: reference docs
+├── SKILL.md        # Required: skill definition (keep under ~500 lines)
+├── references/     # Optional: long reference prose, loaded only when needed
+├── scripts/        # Optional: helper scripts the skill runs
+└── assets/         # Optional: templates/fixtures the skill copies
 ```
 
 ### Step 3: Write Frontmatter
+
+Follow the [Agent Skills spec](https://agentskills.io/specification): only `name` and
+`description` are required; `version` is nested under `metadata`; `compatibility` and
+`allowed-tools` are **strings**, not lists.
+
 ```yaml
 ---
-name: <kebab-case-name>
-description: "One-sentence description of purpose."
-version: 1.0.0
+name: <kebab-case-name>          # must equal the directory name
+description: "What it does AND when to use it — include trigger keywords for discovery."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
+allowed-tools: read edit bash    # space-separated, not a list
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development|workflow|testing|content|security|meta"
   tags:
     - <tag1>
     - <tag2>
-allowed-tools:
-  - <tool1>
-  - <tool2>
 ---
 ```
 
@@ -81,10 +81,12 @@ allowed-tools:
 ## Validation Checklist
 - [ ] Name matches kebab-case, ≤64 chars
 - [ ] Directory name matches `name` field
-- [ ] Has `scripts/` directory
-- [ ] All `allowed-tools` are valid tool names
-- [ ] Description is under 120 characters
+- [ ] `version` is nested under `metadata` (not a top-level field)
+- [ ] `compatibility` and `allowed-tools` are strings, not YAML lists
+- [ ] Description says what it does AND when to use it, with trigger keywords (≤1024 chars)
 - [ ] Tags are lowercase, kebab-case
+- [ ] `SKILL.md` stays focused; long prose/scripts moved to `references/`/`scripts/`
+- [ ] Passes `tests/Invoke-StructureCheck.ps1` (and `skills-ref validate` if installed)
 
 ## Rationalizations
 

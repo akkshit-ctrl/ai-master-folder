@@ -1,11 +1,10 @@
 ---
 name: error-handling
-description: "Patterns and practices for robust error handling across languages and paradigms."
-version: 1.0.0
+description: "Patterns for robust error handling across languages and paradigms. Use when designing error/exception handling, result types, retries, or failure recovery."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - exceptions
     - robustness
     - resilience
-allowed-tools:
-  - read
-  - edit
-  - grep
+allowed-tools: read edit grep
 ---
 
 # Error Handling

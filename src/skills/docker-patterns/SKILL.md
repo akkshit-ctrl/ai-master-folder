@@ -1,11 +1,10 @@
 ---
 name: docker-patterns
-description: "Docker patterns: multi-stage builds, Compose, security, networking, optimization."
-version: 1.0.0
+description: "Docker patterns: multi-stage builds, Compose, security, networking, optimization. Use when writing or fixing a Dockerfile or docker-compose, shrinking images, or containerizing an app."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "devops"
   tags:
@@ -14,10 +13,7 @@ metadata:
     - compose
     - devops
     - infrastructure
-allowed-tools:
-  - read
-  - edit
-  - bash
+allowed-tools: read edit bash
 ---
 
 # Docker Patterns

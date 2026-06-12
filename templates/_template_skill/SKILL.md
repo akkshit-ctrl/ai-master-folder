@@ -1,24 +1,19 @@
 ---
 name: example-skill
-description: "A brief description of what this skill does."
-version: 1.0.0
+description: "What this skill does AND when to use it — include trigger keywords so it is discoverable."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
-  - claude-code: ">=1.0.0"
+compatibility: "opencode >=1.0.0; claude-code >=1.0.0"
+allowed-tools: read edit bash
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
     - example
     - template
-allowed-tools:
-  - read
-  - edit
-  - bash
-# Uncomment below if imported from community
-# source_url: https://github.com/example/repo
-# trust_level: untested | reviewed | trusted
+  # Uncomment below if imported from community
+  # source_url: https://github.com/example/repo
+  # trust_level: untested | reviewed | trusted
 ---
 
 # Example Skill

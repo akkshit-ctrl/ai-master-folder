@@ -1,11 +1,10 @@
 ---
 name: shipping-and-launch
-description: "Checklist-driven process for shipping features, deployments, and releases with confidence."
-version: 1.0.0
+description: "Checklist-driven process for shipping features, deployments, and releases. Use when preparing to ship, deploy, or release and you want a pre-launch checklist."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - launch
     - release
     - deployment
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Shipping & Launch

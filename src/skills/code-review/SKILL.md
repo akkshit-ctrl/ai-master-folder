@@ -1,11 +1,10 @@
 ---
 name: code-review
-description: "Systematic code review covering correctness, security, style, performance, and edge cases."
-version: 1.0.0
+description: "Systematic code review covering correctness, security, style, performance, and edge cases. Use when reviewing a diff or PR, or asked to check code quality before merge."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - quality
     - security
     - best-practices
-allowed-tools:
-  - read
-  - glob
-  - grep
-  - bash
+allowed-tools: read glob grep bash
 ---
 
 # Code Review

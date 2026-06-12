@@ -1,11 +1,10 @@
 ---
 name: continuous-learning
-description: "Session-to-skill evolution pipeline: extract patterns, build instincts, evolve into reusable skills."
-version: 1.0.0
+description: "Session-to-skill evolution pipeline: extract patterns, build instincts, evolve into reusable skills. Use when capturing a repeated workflow as a skill or turning session learnings into reusable guidance."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "meta"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - evolution
     - patterns
     - instincts
-allowed-tools:
-  - read
-  - write
-  - edit
-  - grep
-  - glob
+allowed-tools: read write edit grep glob
 ---
 
 # Continuous Learning

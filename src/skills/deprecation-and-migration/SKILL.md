@@ -1,11 +1,10 @@
 ---
 name: deprecation-and-migration
-description: "Plan and execute API/feature deprecations and migrations with backward compatibility."
-version: 1.0.0
+description: "Plan and execute API/feature deprecations and migrations with backward compatibility. Use when removing or renaming an API, migrating callers, or rolling out a breaking change safely."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - migration
     - lifecycle
     - breaking-changes
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Deprecation & Migration

@@ -1,11 +1,10 @@
 ---
 name: document-processing
-description: "Create and transform documents: docx, pdf, pptx, xlsx generation and editing."
-version: 1.0.0
+description: "Create and transform documents: docx, pdf, pptx, xlsx generation and editing. Use when generating or editing Office or PDF files programmatically."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "content"
   tags:
@@ -14,10 +13,7 @@ metadata:
     - pdf
     - pptx
     - xlsx
-allowed-tools:
-  - bash
-  - read
-  - write
+allowed-tools: bash read write
 ---
 
 # Document Processing

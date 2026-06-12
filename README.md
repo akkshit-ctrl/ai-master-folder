@@ -2,6 +2,14 @@
 
 Welcome to your **AI Operating System**. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode, designed for broad portability across any AI coding agent.
 
+> **Status & portability (v0.4.0).** OpenCode is the only **functional** deployment target
+> today (`Deploy-OpenCode.ps1` → `.opencode`). Skill metadata follows the
+> [Agent Skills standard](https://agentskills.io/specification), so the same `SKILL.md`
+> files are designed to port cleanly to Claude Code and Cursor — but the `adapters/` for
+> those tools are **documented roadmap, not yet functional**. Custom `src/tools/` are
+> OpenCode-specific (`@opencode-ai/plugin`). Treat the cross-agent vision as the direction,
+> and OpenCode as what works now.
+
 ## Philosophy
 
 - **Registry Layer:** `src/` contains your complete inventory of agents, skills, tools, commands, hooks, MCP servers, plugins, instructions, rules, and context modes. Edit these files as the source of truth.

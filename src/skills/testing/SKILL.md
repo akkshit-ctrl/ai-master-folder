@@ -1,11 +1,10 @@
 ---
 name: testing
-description: "TDD methodology, test plan generation, coverage analysis, and boundary testing."
-version: 1.0.0
+description: "TDD methodology, test plan generation, coverage analysis, and boundary testing. Use when writing tests, planning test coverage, or improving a test suite."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - tdd
     - quality
     - coverage
-allowed-tools:
-  - read
-  - bash
-  - glob
-  - grep
+allowed-tools: read bash glob grep
 ---
 
 # Testing

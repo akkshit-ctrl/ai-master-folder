@@ -1,11 +1,10 @@
 ---
 name: browser-testing
-description: "Playwright E2E testing with Page Object Model, fixtures, and CI integration."
-version: 1.0.0
+description: "Playwright E2E testing with Page Object Model, fixtures, and CI integration. Use when writing or fixing end-to-end/browser tests, automating UI flows, or setting up Playwright."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "testing"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - playwright
     - browser
     - testing
-allowed-tools:
-  - bash
-  - read
-  - edit
-  - glob
-  - grep
+allowed-tools: bash read edit glob grep
 ---
 
 # Browser Testing

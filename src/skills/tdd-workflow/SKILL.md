@@ -1,11 +1,10 @@
 ---
 name: tdd-workflow
-description: "Full TDD cycle: RED/GREEN/REFACTOR with verification gate at each phase."
-version: 1.0.0
+description: "Full TDD cycle: RED/GREEN/REFACTOR with a verification gate at each phase. Use when building a feature test-first or asked to follow TDD."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "testing"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - testing
     - red-green-refactor
     - quality
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read edit bash glob grep
 ---
 
 # TDD Workflow

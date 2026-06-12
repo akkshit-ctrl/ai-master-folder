@@ -1,11 +1,10 @@
 ---
 name: changelog-generation
-description: "Generate CHANGELOG.md from Conventional Commits history, with version grouping and categorization."
-version: 1.0.0
+description: "Generate CHANGELOG.md from Conventional Commits history with version grouping and categorization. Use when cutting a release, updating the changelog, or summarizing what changed since the last tag."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - release
     - conventional-commits
     - versioning
-allowed-tools:
-  - bash
-  - read
-  - edit
+allowed-tools: bash read edit
 ---
 
 # Changelog Generation

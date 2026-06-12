@@ -1,11 +1,10 @@
 ---
 name: ci-cd-and-automation
-description: "Design CI/CD pipelines and automation that catch issues early and ship reliably."
-version: 1.0.0
+description: "Design CI/CD pipelines and automation that catch issues early and ship reliably. Use when creating or fixing GitHub Actions/CI workflows, build/test/deploy automation, or release pipelines."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "operations"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - cd
     - automation
     - pipelines
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # CI/CD & Automation

@@ -1,11 +1,10 @@
 ---
 name: spec-driven-development
-description: "Write a PRD covering objectives, structure, constraints, and acceptance criteria before any code."
-version: 1.0.0
+description: "Write a PRD covering objectives, structure, constraints, and acceptance criteria before any code. Use when starting a non-trivial feature that needs a spec first."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - prd
     - requirements
     - planning
-allowed-tools:
-  - read
-  - write
-  - edit
+allowed-tools: read write edit
 ---
 
 # Spec-Driven Development

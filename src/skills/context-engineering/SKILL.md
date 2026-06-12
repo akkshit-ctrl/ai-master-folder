@@ -1,11 +1,10 @@
 ---
 name: context-engineering
-description: "Craft, prune, and structure AI context windows for maximum output quality and relevance."
-version: 1.0.0
+description: "Craft, prune, and structure AI context windows for maximum output quality. Use when assembling prompts or context, deciding what to include, or improving an agent's relevance."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - prompt
     - quality
     - tokens
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Context Engineering

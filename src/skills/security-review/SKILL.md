@@ -1,11 +1,10 @@
 ---
 name: security-review
-description: "OWASP-based security audit: vulnerability scanning, CVE dependency check, threat modeling."
-version: 1.0.0
+description: "OWASP-based security audit: vulnerability scanning, CVE dependency check, threat modeling. Use when reviewing code for security issues or auditing for vulnerabilities."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "security"
   tags:
@@ -14,11 +13,7 @@ metadata:
     - owasp
     - cve
     - vulnerability
-allowed-tools:
-  - read
-  - grep
-  - glob
-  - bash
+allowed-tools: read grep glob bash
 ---
 
 # Security Review

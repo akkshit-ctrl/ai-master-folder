@@ -8,14 +8,33 @@ const { execSync } = require("child_process");
 
 const VALIDATION_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".py", ".go", ".rs", ".java"];
 
+// Safe path allowlist: same pattern the TS tools use. Anything containing shell
+// metacharacters (;, |, &, $, backticks, spaces, quotes, ...) is rejected so a
+// hostile ECC_TOOL_TARGET_FILES value cannot inject commands into execSync.
+const SAFE_PATH = /^[\w.\-/\\@]+$/;
+
 function getChangedFiles() {
   // Read from environment variable set by the harness
   const files = process.env.ECC_TOOL_TARGET_FILES;
   if (!files) return [];
-  return files.split(",").filter((f) => {
-    const ext = path.extname(f).toLowerCase();
-    return VALIDATION_EXTENSIONS.includes(ext);
-  });
+  return files
+    .split(",")
+    .map((f) => f.trim())
+    .filter((f) => {
+      const ext = path.extname(f).toLowerCase();
+      if (!VALIDATION_EXTENSIONS.includes(ext)) return false;
+      if (!SAFE_PATH.test(f)) {
+        console.warn(`[hook:post-edit-validate] Skipping unsafe path: ${JSON.stringify(f)}`);
+        return false;
+      }
+      return true;
+    });
+}
+
+// Quote a validated path for safe shell interpolation (double-quote, escape any
+// embedded quote/backslash). Paths are already allowlisted, so this is defense in depth.
+function quoteArg(p) {
+  return `"${p.replace(/(["\\])/g, "\\$1")}"`;
 }
 
 function runCommand(cmd, cwd) {
@@ -89,7 +108,7 @@ function main() {
   // Run linter on changed files
   const linterCmd = detectLinter(projectRoot);
   if (linterCmd) {
-    const targetFiles = changedFiles.join(" ");
+    const targetFiles = changedFiles.map(quoteArg).join(" ");
     const result = runCommand(`${linterCmd} ${targetFiles}`, projectRoot);
     results.linter = {
       command: `${linterCmd} ${targetFiles}`,

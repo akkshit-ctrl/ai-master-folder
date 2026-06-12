@@ -1,11 +1,10 @@
 ---
 name: code-simplification
-description: "Simplify complex code while preserving behavior: Chesterton's Fence, Rule of 500, complexity reduction."
-version: 1.0.0
+description: "Simplify complex code while preserving behavior: Chesterton's Fence, Rule of 500, complexity reduction. Use when refactoring for clarity, reducing nesting or duplication, or cleaning up overly complex code."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - refactoring
     - complexity
     - cleanup
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read edit bash glob grep
 ---
 
 # Code Simplification

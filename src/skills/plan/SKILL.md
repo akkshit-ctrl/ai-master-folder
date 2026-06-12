@@ -1,11 +1,10 @@
 ---
 name: plan
-description: "Implementation planning: requirements decomposition, task breakdown, timeline estimation."
-version: 1.0.0
+description: "Implementation planning: requirements decomposition, task breakdown, estimation. Use when breaking down a feature or task before coding, or asked for a plan."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - architecture
     - decomposition
     - estimation
-allowed-tools:
-  - read
-  - glob
-  - grep
+allowed-tools: read glob grep
 ---
 
 # Plan

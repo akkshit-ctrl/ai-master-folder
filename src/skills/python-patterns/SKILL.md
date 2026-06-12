@@ -1,11 +1,10 @@
 ---
 name: python-patterns
-description: "Python idioms: type hints, PEP 8, testing with pytest, async patterns, project structure."
-version: 1.0.0
+description: "Python idioms: type hints, PEP 8, pytest, async patterns, project structure. Use when writing or reviewing Python code."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -14,12 +13,7 @@ metadata:
     - type-hints
     - pytest
     - async
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - grep
-  - glob
+allowed-tools: read edit bash grep glob
 ---
 
 # Python Patterns

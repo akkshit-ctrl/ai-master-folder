@@ -1,11 +1,10 @@
 ---
 name: postgres-patterns
-description: "PostgreSQL patterns: query optimization, indexing, migrations, schema design, connection management."
-version: 1.0.0
+description: "PostgreSQL patterns: query optimization, indexing, migrations, schema design, connection management. Use when writing SQL or migrations, tuning a slow query, or designing a Postgres schema."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -14,11 +13,7 @@ metadata:
     - sql
     - optimization
     - migrations
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - grep
+allowed-tools: read edit bash grep
 ---
 
 # PostgreSQL Patterns

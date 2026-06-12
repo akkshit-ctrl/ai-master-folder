@@ -1,11 +1,10 @@
 ---
 name: artifact-builder
-description: "Build, package, and verify distribution artifacts across languages and platforms."
-version: 1.0.0
+description: "Build, package, and verify distribution artifacts across languages and platforms. Use when producing a release build, packaging a binary/wheel/container, or debugging a broken build or packaging step."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - packaging
     - artifacts
     - distribution
-allowed-tools:
-  - bash
-  - read
-  - glob
+allowed-tools: bash read glob
 ---
 
 # Artifact Builder

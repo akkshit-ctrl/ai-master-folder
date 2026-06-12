@@ -1,11 +1,10 @@
 ---
 name: doubt-driven-development
-description: "Surface uncertainty, document unknowns, and make reversible decisions wherever possible."
-version: 1.0.0
+description: "Surface uncertainty, document unknowns, and make reversible decisions. Use when requirements are unclear, you're unsure of an approach, or you want to de-risk a decision."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - uncertainty
     - decisions
     - risk
-allowed-tools:
-  - read
-  - write
-  - edit
+allowed-tools: read write edit
 ---
 
 # Doubt-Driven Development

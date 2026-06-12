@@ -1,11 +1,10 @@
 ---
 name: api-and-interface-design
-description: "Design consistent, predictable, and self-documenting APIs and interfaces."
-version: 1.0.0
+description: "Design consistent, predictable, self-documenting APIs and interfaces. Use when designing or reviewing a REST/GraphQL/library API, naming endpoints, versioning, or shaping function/module signatures."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - design
     - contracts
     - types
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # API & Interface Design

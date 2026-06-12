@@ -1,11 +1,10 @@
 ---
 name: refactoring
-description: "Safe code restructuring with pre/post condition checks, migration patterns, and deprecation."
-version: 1.0.0
+description: "Safe code restructuring with pre/post condition checks, migration patterns, and deprecation. Use when restructuring code without changing its behavior."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - cleanup
     - migration
     - quality
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read edit bash glob grep
 ---
 
 # Refactoring

@@ -1,11 +1,10 @@
 ---
 name: typescript-patterns
-description: "TypeScript strict mode patterns: generics, discriminated unions, branded types, async patterns."
-version: 1.0.0
+description: "TypeScript strict-mode patterns: generics, discriminated unions, branded types, async patterns. Use when writing or reviewing TypeScript."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -14,12 +13,7 @@ metadata:
     - types
     - async
     - generics
-allowed-tools:
-  - read
-  - edit
-  - bash
-  - grep
-  - glob
+allowed-tools: read edit bash grep glob
 ---
 
 # TypeScript Patterns

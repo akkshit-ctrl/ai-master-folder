@@ -1,5 +1,32 @@
 # Changelog
 
+## [0.4.0] - Audit, Spec Compliance & Hardening
+
+- **Security fix**: `post-edit-validate` hook no longer interpolates `ECC_TOOL_TARGET_FILES`
+  into the shell unescaped — filenames are now allowlisted (`/^[\w.\-/\\@]+$/`) and quoted,
+  closing a shell-injection path. Verified: malicious entries like `a;rm -rf x.ts` are dropped.
+- **Skill spec compliance**: normalized all 44 existing `SKILL.md` files (and the skill
+  template) to the [Agent Skills spec](https://agentskills.io/specification) — `version` moved
+  under `metadata`, `compatibility` and `allowed-tools` changed from YAML lists to strings.
+  Bodies untouched.
+- **Validation enforces the spec**: `Invoke-StructureCheck.ps1` now checks every skill for
+  nested `metadata.version` and string `compatibility`/`allowed-tools`, so the format can't
+  silently regress. Suite grew 298 → 350 checks, all passing.
+- **Two new skills**: `evidence-based-audit` (verify-before-trust / rollback-first audit
+  methodology) and `cross-agent-porting` (OpenCode ↔ Claude Code ↔ Cursor porting guide).
+  Each ships a `references/` file as the repo's first progressive-disclosure examples.
+  Skill count 44 → 46.
+- **Discovery descriptions**: every skill description now states *what it does AND when to use
+  it* with trigger keywords, improving auto-invocation.
+- **Self-CI**: added `.github/workflows/validate.yml` running the structure/spec harness on push.
+- **Honest status labeling**: `core/` and `adapters/` (incl. Cursor) marked as roadmap /
+  not-yet-functional; README gained a Status & Portability note; `skill-create` doc corrected
+  (the `scripts/` dir is optional progressive-disclosure, not required).
+- **Runtime verification**: added `tests/Verify-Runtime.md` — a manual sentinel-marker protocol
+  to check OpenCode + DeepSeek actually discover skills and fire hooks.
+- **Corrected stale claim**: prior "210/210 passing" note was outdated; actual harness is 350/350.
+- **Version bump**: VERSION + opencode.json synced to 0.4.0.
+
 ## [0.3.0] - Portability, Hardening & Polish
 
 - **Model-agnostic**: Removed all 12 hardcoded `claude-sonnet-4-20250514` and `claude-opus-4-20250514` model references from commands and template

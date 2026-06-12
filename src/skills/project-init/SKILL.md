@@ -1,11 +1,10 @@
 ---
 name: project-init
-description: "Scaffold new projects with consistent structure, config files, and best-practice conventions."
-version: 1.0.0
+description: "Scaffold new projects with consistent structure, config, and best-practice conventions. Use when starting a new project or repo, or setting up boilerplate."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - project-setup
     - initialization
     - conventions
-allowed-tools:
-  - bash
-  - write
-  - read
-  - edit
+allowed-tools: bash write read edit
 ---
 
 # Project Init

@@ -1,11 +1,10 @@
 ---
 name: observability-and-instrumentation
-description: "Add structured logging, metrics, tracing, and monitoring to understand system behavior in production."
-version: 1.0.0
+description: "Add structured logging, metrics, tracing, and monitoring. Use when instrumenting code, debugging production behavior, or adding logs, metrics, or traces."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "operations"
   tags:
@@ -14,13 +13,7 @@ metadata:
     - logging
     - tracing
     - metrics
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Observability & Instrumentation

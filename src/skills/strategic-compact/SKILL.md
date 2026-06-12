@@ -1,11 +1,10 @@
 ---
 name: strategic-compact
-description: "Manual context compaction guidance: summarize, archive, and prune to manage token budgets."
-version: 1.0.0
+description: "Manual context compaction guidance: summarize, archive, and prune to manage token budgets. Use when the context window is filling up and you need to compact safely."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,8 +12,7 @@ metadata:
     - context
     - tokens
     - efficiency
-allowed-tools:
-  - read
+allowed-tools: read
 ---
 
 # Strategic Compact

@@ -1,11 +1,10 @@
 ---
 name: architecture-decision-records
-description: "Create and maintain Architecture Decision Records (ADRs) for significant technical decisions."
-version: 1.0.0
+description: "Create and maintain Architecture Decision Records (ADRs) for significant technical decisions. Use when choosing between technical options, recording why a decision was made, or someone asks for an ADR."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "documentation"
   tags:
@@ -13,12 +12,7 @@ metadata:
     - architecture
     - decisions
     - documentation
-allowed-tools:
-  - read
-  - write
-  - edit
-  - glob
-  - grep
+allowed-tools: read write edit glob grep
 ---
 
 # Architecture Decision Records

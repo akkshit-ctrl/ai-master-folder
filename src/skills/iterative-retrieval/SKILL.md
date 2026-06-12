@@ -1,11 +1,10 @@
 ---
 name: iterative-retrieval
-description: "Progressive context refinement: retrieve information in stages, from broad to specific."
-version: 1.0.0
+description: "Progressive context refinement: retrieve information in stages, broad to specific. Use when searching a large codebase or corpus where one query won't surface everything."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - context
     - search
     - progressive
-allowed-tools:
-  - grep
-  - glob
-  - read
-  - bash
+allowed-tools: grep glob read bash
 ---
 
 # Iterative Retrieval

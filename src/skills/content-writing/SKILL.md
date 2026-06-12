@@ -1,11 +1,10 @@
 ---
 name: content-writing
-description: "Long-form writing with tone guidelines, research citation, and structural templates."
-version: 1.0.0
+description: "Long-form writing with tone guidelines, research citation, and structural templates. Use when drafting documentation, articles, blog posts, or other prose."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "content"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - content
     - documentation
     - communication
-allowed-tools:
-  - read
-  - grep
-  - write
+allowed-tools: read grep write
 ---
 
 # Content Writing

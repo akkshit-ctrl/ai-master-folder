@@ -1,0 +1,27 @@
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  structure-check:
+    name: Structure & spec validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # PowerShell Core (pwsh) is preinstalled on GitHub-hosted Ubuntu runners.
+      - name: Run structure & spec validation
+        shell: pwsh
+        run: ./tests/Invoke-StructureCheck.ps1
+
+      # Best-effort spec validation against the Agent Skills standard.
+      # Non-blocking: the CLI/package name may change, and it is not required for the build.
+      - name: Validate SKILL.md against agentskills.io spec (best-effort)
+        continue-on-error: true
+        run: |
+          npx --yes @agentskills/skills-ref validate src/skills/* || \
+          echo "skills-ref unavailable or schema mismatch — skipping (non-blocking)."

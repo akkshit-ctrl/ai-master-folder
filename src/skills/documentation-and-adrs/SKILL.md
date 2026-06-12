@@ -1,11 +1,10 @@
 ---
 name: documentation-and-adrs
-description: "Write architecture decision records and maintainable documentation that stays current."
-version: 1.0.0
+description: "Write architecture decision records and maintainable documentation that stays current. Use when writing or restructuring project docs, READMEs, or decision records."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,13 +12,7 @@ metadata:
     - adr
     - architecture
     - decisions
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
+allowed-tools: read write edit bash glob grep
 ---
 
 # Documentation & ADRs

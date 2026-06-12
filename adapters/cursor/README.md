@@ -1,5 +1,9 @@
 # Cursor Adapter
 
+> **Status: 🚧 Roadmap (not yet functional).** The snippet below is a documented starting
+> point, not a tested or deploy-integrated generator. Run it manually at your own risk and
+> verify the output. Tracked as future work; see the `cross-agent-porting` skill.
+
 Cursor uses `.cursor/rules/*.mdc` files. The AI Master Folder's core rules can be converted to this format.
 
 ## Quick Start

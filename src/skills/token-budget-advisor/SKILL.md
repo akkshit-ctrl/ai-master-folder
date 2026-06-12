@@ -1,11 +1,10 @@
 ---
 name: token-budget-advisor
-description: "Advises on token usage, context limits, and strategies for staying within budget."
-version: 1.0.0
+description: "Advises on token usage, context limits, and strategies for staying within budget. Use when worried about context size, cost, or hitting token limits."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,8 +12,7 @@ metadata:
     - context
     - budget
     - efficiency
-allowed-tools:
-  - read
+allowed-tools: read
 ---
 
 # Token Budget Advisor

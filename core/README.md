@@ -2,6 +2,10 @@
 
 Universal, tool-agnostic rules and instructions. These files are safe to use with any AI coding assistant (OpenCode, Claude Code, Cursor, Codex, etc.).
 
+> **Status: pointer/index only.** This directory is a logical map, not a second copy — the
+> real files live under `src/`. Cross-tool conversion (e.g. to Cursor) is **roadmap**, not
+> an automated, tested pipeline yet.
+
 ## What's Here
 
 This directory is a **logical grouping** — the actual source files live under `src/`:

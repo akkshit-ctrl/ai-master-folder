@@ -1,11 +1,10 @@
 ---
 name: performance-audit
-description: "Performance analysis: profiling, load testing, optimization patterns, bottleneck identification."
-version: 1.0.0
+description: "Performance analysis: profiling, load testing, optimization, bottleneck identification. Use when something is slow, profiling, or optimizing latency, throughput, or memory."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - profiling
     - optimization
     - benchmarking
-allowed-tools:
-  - read
-  - bash
-  - grep
-  - glob
+allowed-tools: read bash grep glob
 ---
 
 # Performance Audit

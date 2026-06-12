@@ -1,11 +1,10 @@
 ---
 name: code-analysis
-description: "Static analysis patterns: lint interpretation, complexity measurement, dependency analysis."
-version: 1.0.0
+description: "Static analysis patterns: lint interpretation, complexity measurement, dependency analysis. Use when interpreting linter output, assessing code complexity and hotspots, or analyzing dependencies."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - static-analysis
     - complexity
     - quality
-allowed-tools:
-  - read
-  - bash
-  - glob
-  - grep
+allowed-tools: read bash glob grep
 ---
 
 # Code Analysis

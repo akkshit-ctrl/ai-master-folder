@@ -1,11 +1,10 @@
 ---
 name: explain
-description: "Code explanation at multiple depths: brief overview, standard analysis, deep dive."
-version: 1.0.0
+description: "Code explanation at multiple depths: brief overview, standard analysis, deep dive. Use when asked to explain code, a function, or how a system works."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "development"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - learning
     - documentation
     - onboarding
-allowed-tools:
-  - read
-  - glob
-  - grep
+allowed-tools: read glob grep
 ---
 
 # Explain

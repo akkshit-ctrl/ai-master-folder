@@ -51,6 +51,26 @@ function Check-Frontmatter($label, $path, $fields) {
     }
 }
 
+# Validate a SKILL.md against the agentskills.io frontmatter spec:
+#  - `version` must be nested under metadata (no top-level version)
+#  - `compatibility` must be a scalar string (not a YAML list)
+#  - `allowed-tools` must be a scalar string (not a YAML list)
+function Test-SkillSpec($path) {
+    if (!(Test-Path $path)) { return $false }
+    $content = Get-Content $path -Raw
+    $match = [regex]::Match($content, '^---\s*\n(.*?)\n---', 'Singleline')
+    if (!$match.Success) { return $false }
+    $fm = $match.Groups[1].Value
+
+    # No top-level version; metadata block carries an indented version
+    if ([regex]::IsMatch($fm, '(?m)^version\s*:')) { return $false }
+    if (!([regex]::IsMatch($fm, '(?m)^\s+version\s*:\s*\S'))) { return $false }
+    # compatibility / allowed-tools must have a scalar value on the same line
+    if (!([regex]::IsMatch($fm, '(?m)^compatibility\s*:\s*\S'))) { return $false }
+    if (!([regex]::IsMatch($fm, '(?m)^allowed-tools\s*:\s*\S'))) { return $false }
+    return $true
+}
+
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host " AI Master Folder - Structure Validation" -ForegroundColor Cyan
 Write-Host "============================================" -ForegroundColor Cyan
@@ -114,10 +134,10 @@ $expectedSkills = @(
     "api-and-interface-design", "architecture-decision-records", "artifact-builder",
     "browser-testing", "changelog-generation", "ci-cd-and-automation",
     "code-analysis", "code-review", "code-simplification", "content-writing",
-    "context-engineering", "continuous-learning", "debugging",
+    "context-engineering", "continuous-learning", "cross-agent-porting", "debugging",
     "deprecation-and-migration", "docker-patterns", "document-processing",
     "documentation-and-adrs", "doubt-driven-development", "error-handling",
-    "explain", "git-workflow", "iterative-retrieval", "mcp-builder",
+    "evidence-based-audit", "explain", "git-workflow", "iterative-retrieval", "mcp-builder",
     "observability-and-instrumentation", "performance-audit", "plan",
     "postgres-patterns", "project-init", "prompt-optimizer", "pull-request",
     "python-patterns", "refactoring", "search-first", "security-review",
@@ -134,6 +154,7 @@ foreach ($skill in $expectedSkills) {
     if ($exists) {
         $fields = @("name", "description")
         Check-Frontmatter "  $skill frontmatter (name, description)" $path $fields
+        Test-Check "  $skill spec-compliant (metadata.version, string compatibility/allowed-tools)" (Test-SkillSpec $path)
     }
 }
 

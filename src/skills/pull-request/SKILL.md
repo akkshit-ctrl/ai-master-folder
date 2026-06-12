@@ -1,11 +1,10 @@
 ---
 name: pull-request
-description: "PR description generation, changelog linking, reviewer guidance, and merge readiness."
-version: 1.0.0
+description: "PR description generation, changelog linking, reviewer guidance, and merge readiness. Use when opening a PR or writing a PR description or summary."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - pr
     - review
     - changelog
-allowed-tools:
-  - read
-  - bash
-  - grep
-  - glob
+allowed-tools: read bash grep glob
 ---
 
 # Pull Request

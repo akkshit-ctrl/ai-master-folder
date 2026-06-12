@@ -1,11 +1,10 @@
 ---
 name: git-workflow
-description: "Standardized git conventions: commit messages, branching, PR hygiene, conflict resolution."
-version: 1.0.0
+description: "Standardized git conventions: commit messages, branching, PR hygiene, conflict resolution. Use when committing, branching, resolving conflicts, or cleaning up git history."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,9 +12,7 @@ metadata:
     - version-control
     - conventions
     - pr
-allowed-tools:
-  - bash
-  - read
+allowed-tools: bash read
 ---
 
 # Git Workflow

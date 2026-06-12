@@ -1,11 +1,10 @@
 ---
 name: search-first
-description: "Research-before-coding workflow: search codebase and docs before implementing."
-version: 1.0.0
+description: "Research-before-coding workflow: search codebase and docs before implementing. Use before writing new code, to find existing patterns or utilities to reuse."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,11 +12,7 @@ metadata:
     - investigation
     - search
     - due-diligence
-allowed-tools:
-  - grep
-  - glob
-  - read
-  - bash
+allowed-tools: grep glob read bash
 ---
 
 # Search First

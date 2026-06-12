@@ -1,11 +1,10 @@
 ---
 name: prompt-optimizer
-description: "Analyze and improve prompts for clarity, specificity, token efficiency, and expected output quality."
-version: 1.0.0
+description: "Analyze and improve prompts for clarity, specificity, token efficiency, and output quality. Use when a prompt underperforms or you want to refine prompt or instruction wording."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "meta"
   tags:
@@ -13,10 +12,7 @@ metadata:
     - optimization
     - tokens
     - quality
-allowed-tools:
-  - read
-  - edit
-  - grep
+allowed-tools: read edit grep
 ---
 
 # Prompt Optimizer

@@ -1,11 +1,10 @@
 ---
 name: source-driven-development
-description: "Treat source material as the single source of truth. Derive decisions from primary sources, not assumptions."
-version: 1.0.0
+description: "Treat source material as the single source of truth; derive decisions from primary sources, not assumptions. Use when implementing from a spec, doc, or API reference where accuracy to the source matters."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -13,15 +12,7 @@ metadata:
     - research
     - decisions
     - documentation
-allowed-tools:
-  - read
-  - write
-  - edit
-  - bash
-  - glob
-  - grep
-  - webfetch
-  - websearch
+allowed-tools: read write edit bash glob grep webfetch websearch
 ---
 
 # Source-Driven Development

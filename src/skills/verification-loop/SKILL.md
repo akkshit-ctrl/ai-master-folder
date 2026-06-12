@@ -1,11 +1,10 @@
 ---
 name: verification-loop
-description: "Post-edit quality verification: run lint, typecheck, and tests after every change."
-version: 1.0.0
+description: "Post-edit quality verification: run lint, typecheck, and tests after every change. Use after editing code to confirm nothing broke."
 license: MIT
-compatibility:
-  - opencode: ">=1.0.0"
+compatibility: "opencode >=1.0.0"
 metadata:
+  version: 1.0.0
   author: "AI Master Folder"
   category: "workflow"
   tags:
@@ -14,9 +13,7 @@ metadata:
     - lint
     - typecheck
     - testing
-allowed-tools:
-  - bash
-  - read
+allowed-tools: bash read
 ---
 
 # Verification Loop
