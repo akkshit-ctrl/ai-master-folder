@@ -193,60 +193,48 @@ foreach ($rule in $expectedRules) {
     Test-Check "rule: $rule.md" (Test-Path $path)
 }
 
-# 10. Contexts
-Write-Host "`n[Contexts]" -ForegroundColor Yellow
-foreach ($ctx in @("dev", "research", "review")) {
-    $path = Join-Path (Join-Path $SrcDir "contexts") "$ctx.md"
-    Test-Check "context: $ctx.md" (Test-Path $path)
+# 10. Plugins (native OpenCode lifecycle hooks)
+Write-Host "`n[Plugins]" -ForegroundColor Yellow
+$pluginPath = Join-Path (Join-Path $SrcDir "plugins") "ai-master-hooks.ts"
+Test-Check "plugin: ai-master-hooks.ts exists" (Test-Path $pluginPath)
+if (Test-Path $pluginPath) {
+    $pluginContent = Get-Content $pluginPath -Raw
+    Test-Check "  plugin exports a Plugin" ($pluginContent -match 'Plugin\s*=')
+    Test-Check "  plugin uses native events (tool.execute.before)" ($pluginContent -match 'tool\.execute\.before')
+}
+Test-Check "No legacy src/hooks/ directory" (-not (Test-Path (Join-Path $SrcDir "hooks")))
+
+# 11. Tools use the current @opencode-ai/plugin API
+Write-Host "`n[Tool API]" -ForegroundColor Yellow
+foreach ($tool in $expectedTools) {
+    $path = Join-Path (Join-Path (Join-Path $SrcDir "tools") $tool) "index.ts"
+    if (Test-Path $path) {
+        $tc = Get-Content $path -Raw
+        Test-Check "  $tool uses tool({...}) API (no legacy .args())" (($tc -match 'tool\(\{') -and ($tc -notmatch '\.args\('))
+    }
 }
 
-# 11. Hooks
-Write-Host "`n[Hooks]" -ForegroundColor Yellow
-$hooksJson = Join-Path (Join-Path $SrcDir "hooks") "hooks.json"
-Test-Check "hooks/hooks.json" (Test-Path $hooksJson)
-$expectedHooks = @("post-edit-validate", "post-tool-secret-detect", "pre-compact-warning", "session-end-save", "session-start-restore")
-foreach ($hook in $expectedHooks) {
-    $path = Join-Path (Join-Path $SrcDir "hooks") "scripts"
-    $path = Join-Path $path "$hook.js"
-    Test-Check "hook: $hook.js" (Test-Path $path)
-}
-
-# 12. Cross-Reference: opencode.json vs disk
+# 12. Cross-Reference: profiles/full.json is the registry of record
 Write-Host "`n[Cross-Reference]" -ForegroundColor Yellow
+$fullPath = Join-Path (Join-Path $RepoRoot "profiles") "full.json"
+if (Test-Path $fullPath) {
+    $full = Get-Content $fullPath -Raw | ConvertFrom-Json
+    foreach ($a in $expectedAgents) { Test-Check "full.json lists agent: $a" ($a -in @($full.agents)) }
+    foreach ($c in $expectedCommands) { Test-Check "full.json lists command: $c" ($c -in @($full.commands)) }
+    foreach ($s in $expectedSkills) { Test-Check "full.json lists skill: $s" ($s -in @($full.skills)) }
+    Test-Check "full.json lists plugin: ai-master-hooks" ("ai-master-hooks" -in @($full.plugins))
+}
+
+# 13. Root opencode.json is valid for OpenCode (no rejected keys)
+Write-Host "`n[Config Validity]" -ForegroundColor Yellow
 $configPath = Join-Path $RepoRoot "opencode.json"
 if (Test-Path $configPath) {
-    $config = Get-Content $configPath -Raw | ConvertFrom-Json
-
-    # Agents: config vs disk
-    $configAgents = @($config.agents.PSObject.Properties.Name)
-    foreach ($a in $expectedAgents) {
-        Test-Check "opencode.json lists agent: $a" ($a -in $configAgents)
-    }
-
-    # Commands: config vs disk
-    $configCommands = @($config.commands.PSObject.Properties.Name)
-    foreach ($c in $expectedCommands) {
-        Test-Check "opencode.json lists command: $c" ($c -in $configCommands)
-    }
-
-    # Skills: config vs disk
-    $configSkills = @($config.skills)
-    foreach ($s in $expectedSkills) {
-        Test-Check "opencode.json lists skill: $s" ($s -in $configSkills)
-    }
-}
-
-# 13. No plugins vestige
-Write-Host "`n[No Plugins]" -ForegroundColor Yellow
-$noPluginsDirs = -not (Test-Path (Join-Path $SrcDir "plugins"))
-Test-Check "No src/plugins/ directory" $noPluginsDirs
-foreach ($profile in @("full", "lean")) {
-    $path = Join-Path (Join-Path $RepoRoot "profiles") "$profile.json"
-    if (Test-Path $path) {
-        $content = Get-Content $path -Raw
-        $hasPlugins = $content -match '"plugins"'
-        Test-Check "profile $profile.json has no plugins key" (-not $hasPlugins)
-    }
+    $cfgRaw = Get-Content $configPath -Raw
+    $cfg = $cfgRaw | ConvertFrom-Json
+    Test-Check "opencode.json declares `$schema" ($null -ne $cfg.'$schema')
+    $rejected = @("name", "version", "description", "agents", "commands", "skills")
+    $badKeys = @($cfg.PSObject.Properties.Name | Where-Object { $_ -in $rejected })
+    Test-Check "opencode.json has no OpenCode-invalid keys" ($badKeys.Count -eq 0)
 }
 
 # 14. Core directory

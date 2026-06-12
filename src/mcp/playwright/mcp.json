@@ -3,7 +3,7 @@
   "command": "npx",
   "args": [
     "-y",
-    "@anthropic/mcp-playwright"
+    "@playwright/mcp@latest"
   ],
-  "description": "Playwright browser automation for E2E testing and web scraping"
+  "description": "Playwright browser automation for E2E testing and web scraping (official Microsoft Playwright MCP)"
 }

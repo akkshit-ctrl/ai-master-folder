@@ -15,6 +15,11 @@ unknown (couldn't determine). Don't record a pass you didn't directly observe.
 
 ## 0. Setup (once)
 
+> **Install [bun](https://bun.sh) first.** OpenCode loads the lifecycle plugin via bun; without
+> bun installed, `opencode` **stalls on startup** whenever a plugin is present (verified: even an
+> empty plugin hangs ~90s without bun, while `opencode --pure` skips plugins and is instant). If
+> you don't want the plugin, deploy a profile with no `plugins` key.
+
 ```powershell
 # Deploy the full profile to a scratch project (dry-run first, then execute)
 .\scripts\Deploy-OpenCode.ps1 -ProfileName full -TargetPath "C:\tmp\oc-verify" -Preview
@@ -22,7 +27,15 @@ unknown (couldn't determine). Don't record a pass you didn't directly observe.
 ```
 
 Open `C:\tmp\oc-verify` in OpenCode with DeepSeek V4 Flash selected as the model.
-Confirm `.opencode/` exists and contains `skills/`, `agents/`, `commands/`, `tools/`.
+Confirm `.opencode/` exists and contains `skills/`, `agents/`, `commands/`, `tools/`,
+`plugins/`, and `opencode.json` (with an `mcp` block).
+
+Fast non-interactive discovery checks (no model needed):
+```powershell
+opencode debug skill        # should list the deployed skills
+opencode agent list         # should list architect, code-reviewer, tester, ... as subagents
+opencode debug config       # resolved config; confirm the mcp servers are present
+```
 
 ---
 
@@ -50,17 +63,20 @@ If the sentinel never returns: skills aren't being loaded for this model/config 
 
 > Remove the sentinels after testing.
 
-## 2. Hooks fire
+## 2. Lifecycle plugin fires (`plugins/ai-master-hooks.ts`)
 
-| Hook | How to trigger | Expected observable |
+Requires bun (see Setup). All five legacy hooks are now one native plugin using OpenCode events.
+
+| Behavior | How to trigger | Expected observable |
 |---|---|---|
-| `post-edit-validate` | Edit a `.ts` file in a project that has eslint/tsc configured | console line `[hook:post-edit-validate] {...}`; a lint/type error **blocks** (exit 2) |
-| `post-tool-secret-detect` | Write a file containing `sk-` + 32 chars (a fake key) | hook reports a critical secret and blocks |
-| `session-start-restore` | Start a new session | `~/.opencode/sessions/last-session.json` is read (if present) |
-| `session-end-save` | End a session | `~/.opencode/sessions/last-session.json` is written/updated |
-| `pre-compact-warning` | Drive context toward the limit | a warning tip is emitted (never blocks) |
+| Secret block (`tool.execute.before`) | Ask the agent to write a file containing a fake key, e.g. `sk-` + 32 chars | the write is **blocked** with `[ai-master] Blocked: possible hardcoded secret` |
+| Post-edit validate (`file.edited`) | Edit a `.ts` file in a project with eslint configured, introducing a lint error | a toast warning `Lint issue in <file>: ...` appears (advisory, non-blocking) |
+| Session restore (`session.created`) | Start a new session in a project you used before | toast `Restored context from your last session...` |
+| Session save (`session.idle`) | Leave the session idle | `~/.opencode/sessions/last-session.json` is written/updated |
+| Compact notice (`experimental.session.compacting`) | Drive context toward the limit | a toast about compaction appears |
 
-Pass criterion: the named log line / file change appears. No line = hook not wired for this runtime → `[UA]`/`[FAIL]`.
+Pass criterion: the named toast / block / file change appears. Nothing at all + slow startup
+usually means **bun is missing** — install it and retry. A genuine non-fire after bun is `[UA]`/`[FAIL]`.
 
 ## 3. Commands exposed & usable
 

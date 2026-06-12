@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.5.0] - Make It Actually Work in OpenCode
+
+Verified the deployed system against real OpenCode 1.17.3 and fixed everything that did not
+actually load. Before this release, only skills/agents/commands/AGENTS.md worked; MCP, tools,
+and hooks were inert.
+
+- **Root `opencode.json` is now valid.** The old registry shape (`name`/`agents`/`commands`/
+  `skills` keys) was rejected by OpenCode (`Unrecognized keys`), breaking `opencode` inside the
+  repo. Replaced with a minimal valid config; the registry of record is `profiles/full.json`.
+- **MCP servers now load.** Deploy converts each `src/mcp/<n>/mcp.json` into the `mcp` key of a
+  generated `.opencode/opencode.json` (the only place OpenCode reads MCP). Previously the
+  `.opencode/mcp/` files were ignored.
+- **MCP package names corrected.** `@anthropic/mcp-playwright`, `@anthropic/mcp-supabase`, and
+  `@context7/mcp-server` were 404 placeholders; replaced with the real published packages
+  (`@playwright/mcp`, `@supabase/mcp-server-supabase`, `@upstash/context7-mcp`) and the hosted
+  Sentry MCP. GitHub token env var corrected to `GITHUB_PERSONAL_ACCESS_TOKEN`.
+- **Custom tools rewritten** to the current `@opencode-ai/plugin` `tool({...})` API (the old
+  `tool(name, desc, schema).args()` form is obsolete) and deployed as flat `.opencode/tools/<n>.ts`
+  (the old `<n>/index.ts` folders would all collide as the tool name `index`). `node:` import prefixes.
+- **Hooks rewritten as a native plugin.** The old `hooks.json` + `ECC_*` env `.js` scripts were a
+  Claude-Code convention that OpenCode never runs. Replaced with one `src/plugins/ai-master-hooks.ts`
+  using real OpenCode events (`tool.execute.before` to block secrets, `file.edited` to validate,
+  `session.created`/`session.idle` to persist, `experimental.session.compacting`). **Requires bun.**
+- **Dead weight removed.** Deleted `src/hooks/` (replaced) and `src/contexts/` (never loaded).
+  `src/rules/common/*` are now wired — injected into the deployed `AGENTS.md` at deploy time.
+- **AGENTS.md** stale references fixed; rules + profile instructions inject via markers.
+- **Deploy** warns if bun is missing when a profile includes plugins.
+- **Validation** updated for the new layout (plugin presence, tool API, config validity,
+  registry cross-ref against `profiles/full.json`): 351/351 passing.
+- **Docs** `README` + `tests/Verify-Runtime.md` updated with the real deploy→OpenCode mapping
+  and the bun requirement.
+
 ## [0.4.0] - Audit, Spec Compliance & Hardening
 
 - **Security fix**: `post-edit-validate` hook no longer interpolates `ECC_TOOL_TARGET_FILES`

@@ -1,22 +1,19 @@
 import { tool } from "@opencode-ai/plugin";
-import { z } from "zod";
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 
-export default tool(
-  "git-summary",
-  "Generate a summary of git changes for commit messages",
-  {
-    scope: z
+export default tool({
+  description: "Generate a summary of git changes (diffstat + recent commits) for commit messages.",
+  args: {
+    scope: tool.schema
       .enum(["staged", "unstaged", "branch"])
       .default("staged")
       .describe("Which changes to summarize"),
-    base: z
+    base: tool.schema
       .string()
       .optional()
       .describe("Base branch for branch scope"),
-  }
-)
-  .args(async ({ scope, base }) => {
+  },
+  async execute({ scope, base }) {
     let diffCommand: string;
     let logCommand: string;
     const defaultBranch = process.env.GIT_DEFAULT_BRANCH ?? "main";
@@ -25,13 +22,14 @@ export default tool(
     switch (scope) {
       case "staged":
         diffCommand = "git diff --cached --stat";
-        logCommand = 'git log --oneline -1';
+        logCommand = "git log --oneline -1";
         break;
       case "unstaged":
         diffCommand = "git diff --stat";
         logCommand = "";
         break;
       case "branch":
+      default:
         diffCommand = `git diff ${safeBase}...HEAD --stat`;
         logCommand = `git log ${safeBase}...HEAD --oneline`;
         break;
@@ -43,15 +41,12 @@ export default tool(
     const files = diff
       .split("\n")
       .filter((l) => l.includes("|"))
-      .map((l) => {
-        const [file] = l.split("|").map((s) => s.trim());
-        return file;
-      });
+      .map((l) => l.split("|")[0].trim());
 
-    return {
-      files,
-      diffSummary: diff,
-      recentCommits: log,
-      fileCount: files.length,
-    };
-  });
+    return JSON.stringify(
+      { files, diffSummary: diff, recentCommits: log, fileCount: files.length },
+      null,
+      2
+    );
+  },
+});

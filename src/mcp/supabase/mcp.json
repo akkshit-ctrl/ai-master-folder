@@ -3,7 +3,10 @@
   "command": "npx",
   "args": [
     "-y",
-    "@anthropic/mcp-supabase"
+    "@supabase/mcp-server-supabase@latest"
   ],
-  "description": "Supabase database operations, authentication, and storage management"
+  "env": {
+    "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
+  },
+  "description": "Supabase database, auth, and storage management (official). Requires SUPABASE_ACCESS_TOKEN."
 }

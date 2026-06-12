@@ -2,13 +2,13 @@
 
 Welcome to your **AI Operating System**. This repository acts as the canonical source of truth for your AI coding assistant configurations, optimized for OpenCode, designed for broad portability across any AI coding agent.
 
-> **Status & portability (v0.4.0).** OpenCode is the only **functional** deployment target
-> today (`Deploy-OpenCode.ps1` → `.opencode`). Skill metadata follows the
+> **Status & portability (v0.5.0).** OpenCode is the fully **functional** target — skills,
+> agents, commands, tools, the lifecycle plugin, and MCP servers all load and work
+> (verified against OpenCode 1.17.3). Skill metadata follows the
 > [Agent Skills standard](https://agentskills.io/specification), so the same `SKILL.md`
-> files are designed to port cleanly to Claude Code and Cursor — but the `adapters/` for
-> those tools are **documented roadmap, not yet functional**. Custom `src/tools/` are
-> OpenCode-specific (`@opencode-ai/plugin`). Treat the cross-agent vision as the direction,
-> and OpenCode as what works now.
+> files port cleanly to Claude Code; Cursor needs conversion. The `adapters/` for Claude
+> Code and Cursor remain **documented roadmap**. Custom tools/plugin are OpenCode-specific
+> (`@opencode-ai/plugin`). See `tests/Verify-Runtime.md` to re-verify on your machine.
 
 ## Philosophy
 
@@ -34,37 +34,46 @@ Welcome to your **AI Operating System**. This repository acts as the canonical s
 | Profile | Description |
 |---------|-------------|
 | `lean` | Minimal essentials: core skills, 7 agents, 7 commands. Low token overhead. |
-| `full` | Everything: all 44 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers. |
+| `full` | Everything: all 46 skills, 17 agents, 20 commands, 6 tools, 7 MCP servers, lifecycle plugin. |
 
-## Tool Building
+## How deployment maps to OpenCode
 
-Custom TypeScript tools in `src/tools/` use `@opencode-ai/plugin` and Zod schemas. The deploy script auto-builds them with `bun build --target=node` if bun is available. To build manually:
+`Deploy-OpenCode.ps1` compiles a profile into the exact shapes OpenCode loads:
 
-```powershell
-bun build --target=node --outdir=. src/tools/<name>/index.ts
-```
+| Source (`src/`) | Deployed (`.opencode/`) | How OpenCode uses it |
+|---|---|---|
+| `skills/<n>/SKILL.md` | `skills/<n>/SKILL.md` | auto-discovered skill |
+| `agents/<n>/AGENT.md` | `agents/<n>/AGENT.md` | auto-discovered subagent |
+| `commands/<n>/COMMAND.md` | `commands/<n>/COMMAND.md` | auto-discovered slash command |
+| `tools/<n>/index.ts` | `tools/<n>.ts` | custom tool (`@opencode-ai/plugin`, loaded as `.ts`) |
+| `plugins/<n>.ts` | `plugins/<n>.ts` | lifecycle hooks (auto-loaded plugin) |
+| `mcp/<n>/mcp.json` | wired into `opencode.json` `mcp` key | MCP server |
+| `rules/common/*` + profile `instructions` | injected into `AGENTS.md` | project rules |
+
+Custom tools and the plugin are TypeScript and load directly — no build step. **[bun](https://bun.sh)
+must be installed** for the lifecycle plugin: OpenCode loads plugins via bun, and without it
+`opencode` stalls on startup. If you don't want the plugin, deploy a profile with no `plugins` key.
 
 ## Structure
 
 ```
 ai_master_folder/
-├── opencode.json          # Discovery config for OpenCode
-├── core/                  # Universal, tool-agnostic rules & instructions
-├── adapters/              # Tool-specific configs (opencode, cursor, ...)
+├── opencode.json          # Minimal valid OpenCode config (repo opens cleanly)
+├── core/                  # Pointer/index to universal rules (roadmap)
+├── adapters/              # Tool-specific configs (opencode functional; cursor roadmap)
 ├── src/
-│   ├── AGENTS.md          # Master system prompt (source of truth)
+│   ├── AGENTS.md          # Master system prompt (rules + instructions inject at deploy)
 │   ├── agents/            # Subagent definitions (17 agents)
 │   ├── commands/          # Slash command definitions (20 commands)
-│   ├── skills/            # Skill definitions (44 skills)
+│   ├── skills/            # Skill definitions (46 skills)
 │   ├── tools/             # Custom TypeScript tools (6 tools)
-│   ├── hooks/             # Lifecycle hook scripts + hooks.json
+│   ├── plugins/           # Native OpenCode lifecycle-hook plugin
 │   ├── mcp/               # MCP server configurations (7 servers)
 │   ├── instructions/      # Injectable checklist snippets
-│   ├── rules/             # Rule files (defense, security, coding, git)
-│   └── contexts/          # Context modes: dev, research, review
+│   └── rules/             # Universal rules (injected into AGENTS.md at deploy)
 ├── profiles/              # Deployment profiles: full.json, lean.json
 ├── scripts/               # Deploy-OpenCode.ps1
-├── tests/                 # Invoke-StructureCheck.ps1 validation
+├── tests/                 # Invoke-StructureCheck.ps1 + Verify-Runtime.md
 └── templates/             # Scaffolding templates for new items
 ```
 

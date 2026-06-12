@@ -1,63 +1,43 @@
 import { tool } from "@opencode-ai/plugin";
-import { z } from "zod";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
-export default tool("lint-check", "Run linter on project files", {
-  files: z
-    .array(z.string())
-    .optional()
-    .describe("Files to lint (default: all)"),
-  fix: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe("Auto-fix fixable issues"),
-})
-  .args(async ({ files, fix }) => {
+export default tool({
+  description: "Run the project's linter with framework detection (eslint, ruff, golangci-lint, clippy). Optional auto-fix.",
+  args: {
+    files: tool.schema
+      .array(tool.schema.string())
+      .optional()
+      .describe("Files to lint (default: all)"),
+    fix: tool.schema.boolean().default(false).describe("Auto-fix fixable issues"),
+  },
+  async execute({ files, fix }) {
     const cwd = process.cwd();
-    const safeFiles = files?.filter(f => /^[\w.\-/\\@]+$/.test(f));
+    const safeFiles = files?.filter((f) => /^[\w.\-/\\@]+$/.test(f));
     const targets = safeFiles?.join(" ") ?? ".";
     const fixFlag = fix ? "--fix" : "";
+    const out = (obj: unknown) => JSON.stringify(obj, null, 2);
 
     if (existsSync(join(cwd, "eslint.config.js")) || existsSync(join(cwd, ".eslintrc.js"))) {
       const cmd = `npx eslint ${fixFlag} ${targets} --format json`;
-      try {
-        const output = execSync(cmd, { encoding: "utf-8" });
+      const parse = (output: string) => {
         const results = JSON.parse(output);
-        const totalErrors = results.reduce(
-          (sum: number, f: any) => sum + f.errorCount,
-          0
-        );
-        const totalWarnings = results.reduce(
-          (sum: number, f: any) => sum + f.warningCount,
-          0
-        );
-        return {
+        return out({
           linter: "eslint",
-          errorCount: totalErrors,
-          warningCount: totalWarnings,
+          errorCount: results.reduce((s: number, f: any) => s + f.errorCount, 0),
+          warningCount: results.reduce((s: number, f: any) => s + f.warningCount, 0),
           results,
-        };
+        });
+      };
+      try {
+        return parse(execSync(cmd, { encoding: "utf-8" }));
       } catch (err: any) {
         const output = err.stdout?.trim() ?? "";
         try {
-          const results = JSON.parse(output);
-          return {
-            linter: "eslint",
-            errorCount: results.reduce(
-              (sum: number, f: any) => sum + f.errorCount,
-              0
-            ),
-            warningCount: results.reduce(
-              (sum: number, f: any) => sum + f.warningCount,
-              0
-            ),
-            results,
-          };
+          return parse(output);
         } catch {
-          return { linter: "eslint", error: output || err.message };
+          return out({ linter: "eslint", error: output || err.message });
         }
       }
     }
@@ -65,32 +45,28 @@ export default tool("lint-check", "Run linter on project files", {
     if (existsSync(join(cwd, "pyproject.toml"))) {
       const cmd = `ruff check ${fixFlag} ${targets} --output-format json`;
       try {
-        const output = execSync(cmd, { encoding: "utf-8" });
-        return { linter: "ruff", results: JSON.parse(output) };
+        return out({ linter: "ruff", results: JSON.parse(execSync(cmd, { encoding: "utf-8" })) });
       } catch (err: any) {
-        return { linter: "ruff", output: err.stdout?.trim() ?? err.message };
+        return out({ linter: "ruff", output: err.stdout?.trim() ?? err.message });
       }
     }
 
     if (existsSync(join(cwd, ".golangci.yml")) || existsSync(join(cwd, ".golangci.yaml"))) {
-      const cmd = `golangci-lint run ${targets}`;
       try {
-        const output = execSync(cmd, { encoding: "utf-8" });
-        return { linter: "golangci-lint", output: output.trim() };
+        return out({ linter: "golangci-lint", output: execSync(`golangci-lint run ${targets}`, { encoding: "utf-8" }).trim() });
       } catch (err: any) {
-        return { linter: "golangci-lint", output: err.stdout?.trim() ?? err.message };
+        return out({ linter: "golangci-lint", output: err.stdout?.trim() ?? err.message });
       }
     }
 
     if (existsSync(join(cwd, "Cargo.toml"))) {
-      const cmd = `cargo clippy ${targets} 2>&1`;
       try {
-        const output = execSync(cmd, { encoding: "utf-8" });
-        return { linter: "clippy", output: output.trim() };
+        return out({ linter: "clippy", output: execSync(`cargo clippy ${targets} 2>&1`, { encoding: "utf-8" }).trim() });
       } catch (err: any) {
-        return { linter: "clippy", output: err.stdout?.trim() ?? err.message };
+        return out({ linter: "clippy", output: err.stdout?.trim() ?? err.message });
       }
     }
 
-    return { error: "No supported linter detected (eslint, ruff, golangci-lint, clippy)" };
-  });
+    return out({ error: "No supported linter detected (eslint, ruff, golangci-lint, clippy)" });
+  },
+});

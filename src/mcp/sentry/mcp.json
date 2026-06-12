@@ -1,8 +1,5 @@
 {
   "type": "http",
-  "url": "https://sentry.io/api/0/",
-  "headers": {
-    "Authorization": "Bearer ${SENTRY_TOKEN}"
-  },
-  "description": "Sentry error tracking and performance monitoring"
+  "url": "https://mcp.sentry.dev/mcp",
+  "description": "Sentry error tracking and performance monitoring (hosted MCP; authenticates via OAuth on first use)"
 }

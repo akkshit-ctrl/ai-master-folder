@@ -1,58 +1,50 @@
 import { tool } from "@opencode-ai/plugin";
-import { z } from "zod";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
-export default tool("format-code", "Format code using project formatter", {
-  files: z
-    .array(z.string())
-    .optional()
-    .describe("Files to format (default: all)"),
-  check: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe("Check formatting without modifying"),
-})
-  .args(async ({ files, check }) => {
+export default tool({
+  description: "Format code using the project's formatter with detection (prettier, ruff, gofmt, rustfmt). Set check:true to verify without writing.",
+  args: {
+    files: tool.schema
+      .array(tool.schema.string())
+      .optional()
+      .describe("Files to format (default: all)"),
+    check: tool.schema.boolean().default(false).describe("Check formatting without modifying files"),
+  },
+  async execute({ files, check }) {
     const cwd = process.cwd();
-    const safeFiles = files?.filter(f => /^[\w.\-/\\@]+$/.test(f));
+    const safeFiles = files?.filter((f) => /^[\w.\-/\\@]+$/.test(f));
     const targets = safeFiles?.join(" ") ?? ".";
     const checkFlag = check ? "--check" : "";
+    const out = (obj: unknown) => JSON.stringify(obj, null, 2);
 
     const prettierConfigs = [".prettierrc", ".prettierrc.json", ".prettierrc.yaml", ".prettierrc.yml", ".prettierrc.toml", "prettier.config.js", "prettier.config.mjs"];
     if (prettierConfigs.some((cfg) => existsSync(join(cwd, cfg)))) {
-      const cmd = `npx prettier ${checkFlag} --write ${targets}`;
-      const output = execSync(cmd, { encoding: "utf-8" });
-      return { formatter: "prettier", output: output.trim() };
+      const cmd = check ? `npx prettier --check ${targets}` : `npx prettier --write ${targets}`;
+      return out({ formatter: "prettier", output: execSync(cmd, { encoding: "utf-8" }).trim() });
     }
 
     if (existsSync(join(cwd, "pyproject.toml"))) {
-      const cmd = `ruff format ${checkFlag} ${targets}`;
-      const output = execSync(cmd, { encoding: "utf-8" });
-      return { formatter: "ruff", output: output.trim() };
+      return out({ formatter: "ruff", output: execSync(`ruff format ${checkFlag} ${targets}`, { encoding: "utf-8" }).trim() });
     }
 
-    if (existsSync(join(cwd, ".go.mod")) || existsSync(join(cwd, "go.mod"))) {
-      const cmd = `gofmt ${checkFlag === "--check" ? "-d" : "-w"} ${targets}`;
+    if (existsSync(join(cwd, "go.mod"))) {
       try {
-        const output = execSync(cmd, { encoding: "utf-8" });
-        return { formatter: "gofmt", output: output.trim() };
+        return out({ formatter: "gofmt", output: execSync(`gofmt ${check ? "-d" : "-w"} ${targets}`, { encoding: "utf-8" }).trim() });
       } catch (err: any) {
-        return { formatter: "gofmt", output: err.stdout?.trim() ?? err.message };
+        return out({ formatter: "gofmt", output: err.stdout?.trim() ?? err.message });
       }
     }
 
     if (existsSync(join(cwd, "Cargo.toml"))) {
-      const cmd = `cargo fmt ${checkFlag} ${targets}`;
       try {
-        const output = execSync(cmd, { encoding: "utf-8" });
-        return { formatter: "rustfmt", output: output.trim() };
+        return out({ formatter: "rustfmt", output: execSync(`cargo fmt ${checkFlag} ${targets}`, { encoding: "utf-8" }).trim() });
       } catch (err: any) {
-        return { formatter: "rustfmt", output: err.stdout?.trim() ?? err.message };
+        return out({ formatter: "rustfmt", output: err.stdout?.trim() ?? err.message });
       }
     }
 
-    return { error: "No supported formatter detected (prettier, ruff, gofmt, rustfmt)" };
-  });
+    return out({ error: "No supported formatter detected (prettier, ruff, gofmt, rustfmt)" });
+  },
+});

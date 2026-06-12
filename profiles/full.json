@@ -113,5 +113,8 @@
     "sentry",
     "sequential-thinking",
     "supabase"
+  ],
+  "plugins": [
+    "ai-master-hooks"
   ]
 }

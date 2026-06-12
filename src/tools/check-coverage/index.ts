@@ -1,19 +1,19 @@
 import { tool } from "@opencode-ai/plugin";
-import { z } from "zod";
-import { execSync } from "child_process";
-import { existsSync } from "fs";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 
-export default tool("check-coverage", "Check test coverage for the project", {
-  threshold: z
-    .number()
-    .min(0)
-    .max(100)
-    .optional()
-    .default(80)
-    .describe("Minimum coverage percentage"),
-})
-  .args(async ({ threshold }) => {
+export default tool({
+  description: "Run the project's coverage tool against a threshold with detection (vitest, jest, pytest, go, cargo-tarpaulin, nyc).",
+  args: {
+    threshold: tool.schema
+      .number()
+      .min(0)
+      .max(100)
+      .default(80)
+      .describe("Minimum coverage percentage"),
+  },
+  async execute({ threshold }) {
     const cwd = process.cwd();
     let command: string;
 
@@ -28,21 +28,24 @@ export default tool("check-coverage", "Check test coverage for the project", {
     } else if (existsSync(join(cwd, "Cargo.toml"))) {
       command = `cargo tarpaulin --out Xml`;
     } else if (existsSync(join(cwd, ".nycrc")) || existsSync(join(cwd, ".nycrc.json"))) {
-      command = `npx nyc --reporter=text-summary ${threshold}`;
+      command = `npx nyc --reporter=text-summary`;
     } else {
-      return {
-        error: "No supported coverage tool detected (vitest, jest, pytest, go, cargo-tarpaulin, nyc)",
-      };
+      return JSON.stringify(
+        { error: "No supported coverage tool detected (vitest, jest, pytest, go, cargo-tarpaulin, nyc)" },
+        null,
+        2
+      );
     }
 
     try {
       const output = execSync(command, { encoding: "utf-8", timeout: 120000 });
-      return { output: output.trim(), passed: true };
+      return JSON.stringify({ output: output.trim(), passed: true }, null, 2);
     } catch (err: any) {
-      return {
-        output: err.stdout?.trim() ?? "",
-        error: err.stderr?.trim() ?? err.message,
-        passed: false,
-      };
+      return JSON.stringify(
+        { output: err.stdout?.trim() ?? "", error: err.stderr?.trim() ?? err.message, passed: false },
+        null,
+        2
+      );
     }
-  });
+  },
+});

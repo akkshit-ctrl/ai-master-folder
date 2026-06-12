@@ -40,5 +40,8 @@
   "mcp": [
     "filesystem",
     "sequential-thinking"
+  ],
+  "plugins": [
+    "ai-master-hooks"
   ]
 }

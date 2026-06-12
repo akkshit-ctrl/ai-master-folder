@@ -1,18 +1,19 @@
 import { tool } from "@opencode-ai/plugin";
-import { z } from "zod";
-import { execSync } from "child_process";
+import { execSync } from "node:child_process";
 
-export default tool("changed-files", "Get list of changed files from git", {
-  scope: z
-    .enum(["staged", "unstaged", "branch", "all"])
-    .default("unstaged")
-    .describe("Which files to return"),
-  base: z
-    .string()
-    .optional()
-    .describe("Base branch for branch scope"),
-})
-  .args(async ({ scope, base }) => {
+export default tool({
+  description: "Get list of changed files from git (staged, unstaged, branch, or all).",
+  args: {
+    scope: tool.schema
+      .enum(["staged", "unstaged", "branch", "all"])
+      .default("unstaged")
+      .describe("Which files to return"),
+    base: tool.schema
+      .string()
+      .optional()
+      .describe("Base branch for branch scope"),
+  },
+  async execute({ scope, base }) {
     let command: string;
     const defaultBranch = process.env.GIT_DEFAULT_BRANCH ?? "main";
     const safeBase = base && /^[\w.\-/]+$/.test(base) ? base : defaultBranch;
@@ -28,6 +29,7 @@ export default tool("changed-files", "Get list of changed files from git", {
         command = `git diff --name-only ${safeBase}...HEAD`;
         break;
       case "all":
+      default:
         command =
           'git diff --cached --name-only && echo "---" && git diff --name-only';
         break;
@@ -39,5 +41,6 @@ export default tool("changed-files", "Get list of changed files from git", {
       .map((f) => f.trim())
       .filter((f) => f && f !== "---");
 
-    return { files };
-  });
+    return JSON.stringify({ files }, null, 2);
+  },
+});

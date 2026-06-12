@@ -3,7 +3,7 @@
   "command": "npx",
   "args": [
     "-y",
-    "@context7/mcp-server"
+    "@upstash/context7-mcp"
   ],
-  "description": "Live documentation lookup for libraries, frameworks, and APIs"
+  "description": "Live documentation lookup for libraries, frameworks, and APIs (Context7 by Upstash)"
 }
